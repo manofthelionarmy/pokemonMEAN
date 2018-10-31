@@ -1,0 +1,18 @@
+.jumbotron {
+  background-color: aliceblue;
+  height: 100%;
+  padding: 50px 50px 50px 50px;
+}
+
+mat-card {
+  width: 80%;
+  margin: auto;
+}
+
+mat-form-field, textarea {
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}
