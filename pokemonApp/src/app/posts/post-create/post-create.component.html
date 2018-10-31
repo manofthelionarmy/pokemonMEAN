@@ -2,12 +2,14 @@
   <h1>First component of mock app</h1>
   <mat-card>
     <mat-form-field>
-      <textarea matInput rows="6" [(ngModel)]="enteredValue"></textarea>
+      <input matInput type="text" [(ngModel)]="enteredTitle" placeholder="Enter Title">
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows="6" [(ngModel)]="enteredContent" placeholder="Enter Text"></textarea>
     </mat-form-field>
 
     <hr>
     <button class="btn btn-primary" (click)="onAddPost()">Submit</button>
-    <p>{{newPost}}</p>
   </mat-card>
 
 </div>

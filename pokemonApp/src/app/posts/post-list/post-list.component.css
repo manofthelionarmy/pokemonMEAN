@@ -1,14 +1,15 @@
+:host {
+  display: block;
+  margin-top: 1rem;
+}
+
+.info-text {
+  text-align: center;
+}
+
 .jumbotron {
   background-color: aliceblue;
   height: 100%;
   padding: 50px 50px 50px 50px;
   border-radius: 5px;
-}
-
-mat-form-field, textarea {
-  width: 100%;
-}
-
-h1 {
-  text-align: center;
 }

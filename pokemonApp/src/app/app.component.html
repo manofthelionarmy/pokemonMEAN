@@ -2,6 +2,7 @@
 <h1 style="text-align: center">The App is beginning to take shape!</h1>
 <app-header></app-header>
 <main>
-  <app-post-create></app-post-create>
+  <app-post-create (postCreated)="onPostAdded($event)"></app-post-create>
+  <app-post-list [posts]="storedPosts"></app-post-list>
 </main>
 
