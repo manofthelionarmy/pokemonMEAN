@@ -1,16 +1,42 @@
 <div class="jumbotron">
   <h1>First component of mock app</h1>
   <mat-card>
-    <form>
+    <form (submit)="onAddPost(postForm)" #postForm="ngForm">
     <mat-form-field>
-      <input matInput type="text" [(ngModel)]="enteredTitle" placeholder="Enter Title">
+      <input
+      matInput
+      type="text"
+      name = "title"
+      ngModel
+      placeholder="Enter Title"
+      required
+      minlength="3"
+      #title="ngModel">
+      <mat-error *ngIf="title.invalid">
+        Please enter a post title
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput rows="6" [(ngModel)]="enteredContent" placeholder="Enter Text"></textarea>
+      <textarea
+      matInput
+      rows="4"
+      name = "content"
+      ngModel
+      placeholder="Enter Text"
+      required
+      #content="ngModel">
+      </textarea>
+      <mat-error
+      *ngIf="content.invalid"
+      >
+      Please enter content
+      </mat-error>
     </mat-form-field>
 
     <hr>
-    <button class="btn btn-primary" (click)="onAddPost()">Submit</button>
+    <button
+    class="btn btn-primary"
+    type="submit">Submit</button>
     </form>
   </mat-card>
 
