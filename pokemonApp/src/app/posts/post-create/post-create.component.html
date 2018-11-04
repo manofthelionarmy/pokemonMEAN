@@ -1,6 +1,7 @@
 <div class="jumbotron">
   <h1>First component of mock app</h1>
   <mat-card>
+    <form>
     <mat-form-field>
       <input matInput type="text" [(ngModel)]="enteredTitle" placeholder="Enter Title">
     </mat-form-field>
@@ -10,6 +11,7 @@
 
     <hr>
     <button class="btn btn-primary" (click)="onAddPost()">Submit</button>
+    </form>
   </mat-card>
 
 </div>
