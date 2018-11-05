@@ -15,7 +15,6 @@ export class PostCreateComponent implements OnInit {
   enteredContent = '';
   enteredTitle = '';
 
-  postCreated = new EventEmitter<Post>();
 
   ngOnInit() {
   }
@@ -26,7 +25,7 @@ export class PostCreateComponent implements OnInit {
     }
 
     this.postService.addPost(form.value.title, form.value.content);
-
+    form.resetForm();
   }
 
 }
