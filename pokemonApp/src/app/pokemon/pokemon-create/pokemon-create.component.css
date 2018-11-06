@@ -1,0 +1,8 @@
+.jumbotron  {
+  background-color: aliceblue;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 1em;
+}

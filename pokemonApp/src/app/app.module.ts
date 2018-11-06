@@ -8,13 +8,17 @@ import {MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatExp
 import { HeaderComponent } from './header/header/header.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { HttpClientModule } from '@angular/common/http';
+import { PokemonCreateComponent } from './pokemon/pokemon-create/pokemon-create.component';
+import { PokemonListComponent } from './pokemon/pokemon-list/pokemon-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostCreateComponent,
     HeaderComponent,
-    PostListComponent
+    PostListComponent,
+    PokemonCreateComponent,
+    PokemonListComponent
   ],
   imports: [
     BrowserModule,

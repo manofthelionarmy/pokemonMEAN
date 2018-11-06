@@ -66,4 +66,9 @@ app.delete("/api/posts/:id", (req, res, next) => {
   res.status(200).json({message: 'Post Deleted'});
 });
 
+
+app.post('/api/pokemon', (req, res, next) => {
+
+});
+
 module.exports = app;
