@@ -69,13 +69,20 @@ const ember_attack = new Attacks({
    evolutionId: charmander.kdex,
    kdex: (charmander.kdex + 1),
    pokemonName: 'Charmeleon'
- })
+ });
+
+ const resistance_charmander = new Resistances({
+  kdex: charmander.kdex,
+  pokemonName: charmander.pokemonName,
+  resistances: ['Grass', 'Ice']
+ });
 
 charmander.save();
 ability_charmander.save();
 ember_attack.save();
 moveset_charmander.save();
 evolution_charmander.save();
+resistance_charmander.save();
 
 const bulbasaur = new Pokemon({
   pokemonName: 'Bulbasaur',
@@ -84,7 +91,7 @@ const bulbasaur = new Pokemon({
   description: 'Grass pokemon',
   height: 2.5,
   weight: 32.9
-})
+});
 
 const ability_bulbasaur = new Abilities({
   kdex: bulbasaur.kdex,
@@ -112,13 +119,20 @@ const evolution_bulbasaur = new Evolutions({
   evolutionId: bulbasaur.kdex,
   kdex: (bulbasaur.kdex + 1),
   pokemonName: 'Ivysaur'
-})
+});
+
+const resistance_bulbasaur = new Resistances({
+  kdex: bulbasaur.kdex,
+  pokemonName: bulbasaur.pokemonName,
+  resistances: ['Water']
+});
 
 bulbasaur.save();
 ability_bulbasaur.save();
 razorleaf_attack.save();
 moveset_bulbasaur.save();
 evolution_bulbasaur.save();
+resistance_bulbasaur.save();
 
 const squirtle = new Pokemon({
   pokemonName: 'Squirtle',
@@ -157,10 +171,16 @@ const evolution_squirtle = new Evolutions({
   pokemonName: 'Wartortle'
 })
 
+const resistance_squirtle = new Resistances({
+  kdex: squirtle.kdex,
+  pokemonName: squirtle.pokemonName,
+  resistances: ['Fire']
+});
+
 squirtle.save();
 ability_squirtle.save();
 watergun_attack.save();
 moveset_squirtle.save();
 evolution_squirtle.save();
-
+resistance_squirtle.save();
 module.exports = app;
