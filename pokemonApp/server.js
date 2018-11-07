@@ -1,6 +1,6 @@
 const http = require('http');
 const debug = require('debug')('node-angular');
-const app = require('./backend/app');
+const app = require('./backend/pokemonapp');
 
 
 //making sure the port is a valid number
