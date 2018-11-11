@@ -32,10 +32,10 @@ export class PokemonCreateComponent implements OnInit {
       resistances: [form.value.resistance]
     };
 
-    const evolution: Evolutions = {
+    const evolutions: Evolutions = {
       id: null,
       kdex: form.value.kdex,
-      pokemonName: form.value.name
+      pokemonName: form.value.evolutionName
     };
 
     const weakness: Weaknesses = {
@@ -57,7 +57,7 @@ export class PokemonCreateComponent implements OnInit {
       kdex: form.value.kdex,
       types: [form.value.types],
       resistances: resistance,
-      evolution: evolution,
+      evolutions: evolutions,
       weaknesses: weakness,
       abilities: ability,
       height: form.value.height,

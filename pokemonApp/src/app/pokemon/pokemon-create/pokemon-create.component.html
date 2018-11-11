@@ -1,136 +1,63 @@
-<div class = "jumbotron">
+<div class="jumbotron">
   <h1 style="text-align: center">Create Pokemon Entry</h1>
-  <form (submit)="onAddPokemon(pokemonForm)" #pokemonForm = "ngForm">
+  <form (submit)="onAddPokemon(pokemonForm)" #pokemonForm="ngForm">
     <mat-card>
       <mat-form-field>
-        <input
-        matInput
-        type="text"
-        name="name"
-        ngModel
-        placeholder="Enter Pokemon Name"
-        required
-        minlength="3"
-        #title="ngModel"
-        >
+        <input matInput type="text" name="name" ngModel placeholder="Enter Pokemon Name" required minlength="3" #title="ngModel">
         <mat-error *ngIf="title.invalid">
           Please enter a Pokemon name
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type="text"
-        name="kdex"
-        ngModel
-        placeholder="Enter kdex number"
-        required
-        #kdex="ngModel"
-        >
+        <input matInput type="text" name="kdex" ngModel placeholder="Enter kdex number" required #kdex="ngModel">
         <mat-error *ngIf="kdex.invalid">
           Please enter a kDex number
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type="text"
-        name="types"
-        ngModel
-        placeholder="Enter its type"
-        required
-        #types="ngModel"
-        >
+        <input matInput type="text" name="types" ngModel placeholder="Enter its type" required #types="ngModel">
         <mat-error *ngIf="types.invalid">
           Please enter its type
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" name="evolution" ngModel placeholder="Enter an evolution" required #evolution="ngModel">
+        <input matInput type="text" name="evolutionName" ngModel placeholder="Enter an evolution" required #evolution="ngModel">
         <mat-error *ngIf="evolution.invalid">
           Please enter an evolution
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type="text"
-        name="resistance"
-        ngModel
-        placeholder="Enter a resistance"
-        required
-        #resistance = "ngModel"
-        >
+        <input matInput type="text" name="resistance" ngModel placeholder="Enter a resistance" required #resistance="ngModel">
         <mat-error *ngIf="resistance.invalid">
           Please enter a reistance
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type="text"
-        name="weakness"
-        ngModel
-        placeholder="Enter a weakness"
-        required
-        #weakness = "ngModel"
-        >
-        <mat-error *ngIf= "weakness.invalid">
+        <input matInput type="text" name="weakness" ngModel placeholder="Enter a weakness" required #weakness="ngModel">
+        <mat-error *ngIf="weakness.invalid">
           Enter a weakness
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type="text"
-        name="ability"
-        ngModel
-        placeholder="Enter an ability"
-        required
-        #ability = "ngModel"
-        >
+        <input matInput type="text" name="ability" ngModel placeholder="Enter an ability" required #ability="ngModel">
         <mat-error *ngIf="ability.invalid">
           Please enter an ability
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type="number"
-        name="height"
-        ngModel
-        placeholder = "Enter height"
-        required
-        #height = "ngModel"
-        >
+        <input matInput type="number" name="height" ngModel placeholder="Enter height" required #height="ngModel">
         <mat-error *ngIf="height.invalid">
           Please enter a height
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input
-        matInput
-        type = "number"
-        name = "weight"
-        ngModel
-        placeholder="Enter weight"
-        required
-        #weight = "ngModel"
-        >
-        <mat-error *ngIf = "weight.invalid">
+        <input matInput type="number" name="weight" ngModel placeholder="Enter weight" required #weight="ngModel">
+        <mat-error *ngIf="weight.invalid">
           Please enter a weight
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <textarea
-        matInput
-        rows="4"
-        name="description"
-        ngModel
-        placeholder="Enter a description"
-        required
-        #description = "ngModel"
-        >
+        <textarea matInput rows="4" name="description" ngModel placeholder="Enter a description" required #description="ngModel">
 
         </textarea>
         <mat-error *ngIf="description.invalid">

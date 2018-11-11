@@ -3,13 +3,6 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 const Post = require('./models/posts');
-const Pokemon = require('./models/pokemon/pokemon');
-const Abilities = require('./models/pokemon/abilities');
-const Attacks = require('./models/pokemon/attacks');
-const Evolutions = require('./models/pokemon/evolution');
-const Movesets = require('./models/pokemon/moveset');
-const Resistances = require('./models/pokemon/resistance');
-const Weaknesses = require('./models/pokemon/weakness');
 const app = express();
 
 mongoose.connect("mongodb+srv://mando:1KBNWdXuNKTAJb3e@cluster0-ewz1r.mongodb.net/node-angular?retryWrites=true", {useNewUrlParser: true})
@@ -72,9 +65,5 @@ app.delete("/api/posts/:id", (req, res, next) => {
   res.status(200).json({message: 'Post Deleted'});
 });
 
-
-app.post('/api/pokemon', (req, res, next) => {
-
-});
 
 module.exports = app;

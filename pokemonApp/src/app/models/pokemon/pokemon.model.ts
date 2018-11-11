@@ -7,7 +7,7 @@ export interface Pokemon {
   pokemonName: string;
   kdex: number;
   types: string[];
-  evolution: Evolutions;
+  evolutions: Evolutions;
   resistances: Resistances;
   weaknesses: Weaknesses;
   abilities: Abilities;
