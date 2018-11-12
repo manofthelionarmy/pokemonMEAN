@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Pokemon = require('./models/pokemon/pokemon');
+// const PokemonAndTheirMovesets = require('./models/pokemon/pokemonAndTheirMovesets');
 const Abilities = require('./models/pokemon/abilities');
 const Attacks = require('./models/pokemon/attacks');
 const Evolutions = require('./models/pokemon/evolution');
@@ -86,5 +87,15 @@ app.post("/api/addPokemon", (req, res, next) => {
 
 });
 
+app.get("/api/getPokemonOptions", (req, res, next) => {
+  Pokemon.find().select('_id kdex pokemonName')
+  .then( documents => {
+
+    res.status(200).json({
+      message: 'Pokemon fetched Successfully',
+      pokemon: documents
+    })
+  });
+});
 
 module.exports = app;

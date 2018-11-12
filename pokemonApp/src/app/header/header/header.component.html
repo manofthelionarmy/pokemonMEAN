@@ -1,1 +1,13 @@
-<mat-toolbar color="primary">Pokemon App</mat-toolbar>
+<mat-toolbar color="primary">
+  <span>Pokemon App</span>
+  <span id="spacer"></span>
+  <mat-menu #appMenu="matMenu">
+    <a routerLink=""><button mat-menu-item> Create Pokemon</button></a>
+    <a routerLink="moveset"><button mat-menu-item >Add Movesets</button></a>
+    <a routerLink="list"><button mat-menu-item>Pokemon DB</button></a>
+  </mat-menu>
+  <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+</mat-toolbar>

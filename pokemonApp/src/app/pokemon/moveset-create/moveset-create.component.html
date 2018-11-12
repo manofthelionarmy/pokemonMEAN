@@ -1,0 +1,18 @@
+<div class="jumbotron">
+  <h1 style="text-align: center">Create Moveset</h1>
+    <form>
+      <mat-card>
+      <mat-form-field>
+        <mat-select placeholder="Select Pokemon" name="selectedPokemon" [formControl]="pokmonControl" required disableOptionCentering="true">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let s of selectOptions" [value]="s.pokemonName">
+            {{s.pokemonName}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pokmonControl.hasError('required')">
+          Please select a Pokemon
+        </mat-error>
+      </mat-form-field>
+      </mat-card>
+    </form>
+</div>
