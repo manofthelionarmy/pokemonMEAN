@@ -27,13 +27,29 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" name="resistance" ngModel placeholder="Enter a resistance" required #resistance="ngModel">
+
+        <div class="input-group">
+          <input matInput type="text" class="form-control" name="resistance" ngModel placeholder="Enter a resistance" required #resistance="ngModel" aria-describedby="add_button">
+          <div class="input-group-append">
+            <button mat-icon-button type="button" id="add_button" class="butn btn-outline-secondary">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+
         <mat-error *ngIf="resistance.invalid">
           Please enter a reistance
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" name="weakness" ngModel placeholder="Enter a weakness" required #weakness="ngModel">
+        <div class="input-group">
+          <input matInput type="text" class="form-control" name="weakness" ngModel placeholder="Enter a weakness" required #weakness="ngModel">
+          <div class="input-group-append">
+            <button mat-icon-button type="button" id="add_button" class="butn btn-outline-secondary">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
         <mat-error *ngIf="weakness.invalid">
           Enter a weakness
         </mat-error>

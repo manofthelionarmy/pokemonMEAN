@@ -6,7 +6,7 @@ import { Pokemon } from './../../models/pokemon/pokemon.model';
 import { NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Resistances } from 'src/app/models/pokemon/resistances.model';
-
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-pokemon-create',
@@ -15,7 +15,7 @@ import { Resistances } from 'src/app/models/pokemon/resistances.model';
 })
 export class PokemonCreateComponent implements OnInit {
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private pokemonService: PokemonService, private snackbar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -67,6 +67,10 @@ export class PokemonCreateComponent implements OnInit {
 
     this.pokemonService.addPokemon(pokemon);
     form.resetForm();
+
+    this.snackbar.open('Pokemon Added', 'Close', {
+      duration: 2000
+    });
   }
 
 }

@@ -15,6 +15,7 @@ export class PostCreateComponent implements OnInit {
   enteredContent = '';
   enteredTitle = '';
 
+  types: string[];
 
   ngOnInit() {
   }

@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Pokemon = require('./models/pokemon/pokemon');
-// const PokemonAndTheirMovesets = require('./models/pokemon/pokemonAndTheirMovesets');
 const Abilities = require('./models/pokemon/abilities');
 const Attacks = require('./models/pokemon/attacks');
 const Evolutions = require('./models/pokemon/evolution');
@@ -82,9 +81,29 @@ app.post("/api/addPokemon", (req, res, next) => {
   weakness.save();
 
   res.status(201).json({
-    message: 'Pokemon added successfully'
+    message: 'Pokemon added successfully',
+    pokemonId: pokemon._id
   });
 
+});
+
+app.post("/api/addAttack", (req, res, next) => {
+  const attack = new Attacks({
+    attackNumber: req.body.attackNumber,
+    attackName: req.body.attackName,
+    PP: req.body.PP,
+    power: req.body.power,
+    accuracy: req.body.accuracy,
+    type: req.body.type,
+    category: req.body.category
+  });
+
+  attack.save();
+
+  res.status(201).json({
+    message: 'Attack Added Sucessfully',
+    attackId: attack._id
+  });
 });
 
 app.get("/api/getPokemonOptions", (req, res, next) => {
@@ -98,4 +117,24 @@ app.get("/api/getPokemonOptions", (req, res, next) => {
   });
 });
 
+app.get("/api/getAttacks/:_id/:kdex/:pokemonName", (req, res, next) => {
+
+  var query = Movesets.find().where('pokemonName').equals(req.params.pokemonName);
+
+  query.exec((err, documents) => {
+    if(err) {
+      console.error('Problem with fetching');
+    }
+    else {
+      console.log('Result of query:\n' + documents);
+    }
+
+    res.status(200).json({
+      message: 'Hello',
+      response: documents
+    });
+  });
+
+
+});
 module.exports = app;

@@ -1,4 +1,5 @@
 export interface Attacks {
+  id: string;
   attackNumber: number;
   attackName: string;
   PP: number;
