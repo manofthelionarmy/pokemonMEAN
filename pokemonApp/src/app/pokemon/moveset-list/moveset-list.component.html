@@ -1,3 +1,42 @@
-<p>
-  moveset-list works!
-</p>
+<h1 *ngIf="selectedPokemon != undefined">{{selectedPokemon.pokemonName}}'s Moveset</h1>
+<table mat-table [dataSource]="data" class="mat-elevation-z8">
+  <ng-container matColumnDef="attackNo">
+    <th mat-header-cell *matHeaderCellDef>Attack No.</th>
+    <td mat-cell *matCellDef="let element">{{element.attackNumber}}</td>
+    <td mat-cell><button>Remove</button></td>
+  </ng-container>
+  <ng-container matColumnDef="attackName">
+    <th mat-header-cell *matHeaderCellDef>Attack Name</th>
+    <td mat-cell *matCellDef="let element">{{element.attackName}}</td>
+  </ng-container>
+  <ng-container matColumnDef="PP">
+    <th mat-header-cell *matHeaderCellDef>Power Points</th>
+    <td mat-cell *matCellDef="let element">{{element.PP}}</td>
+  </ng-container>
+  <ng-container matColumnDef="power">
+    <th mat-header-cell *matHeaderCellDef>Power</th>
+    <td mat-cell *matCellDef="let element">{{element.power}}</td>
+  </ng-container>
+  <ng-container matColumnDef="accuracy">
+    <th mat-header-cell *matHeaderCellDef>Accuracy</th>
+    <td mat-cell *matCellDef="let element">{{element.accuracy}}</td>
+  </ng-container>
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element">{{element.type}}</td>
+  </ng-container>
+  <ng-container matColumnDef="category">
+    <th mat-header-cell *matHeaderCellDef>Category</th>
+    <td mat-cell *matCellDef="let element">{{element.category}}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Action</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button>
+        <mat-icon>remove_circle_outline</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

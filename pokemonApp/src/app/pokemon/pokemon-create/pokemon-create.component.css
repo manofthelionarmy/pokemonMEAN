@@ -6,3 +6,13 @@ mat-form-field {
   width: 100%;
   margin-bottom: 1em;
 }
+
+#spacer {
+  flex: 1 1 auto;
+}
+
+#add_button{
+  margin-left: 0;
+  float: right;
+  z-index: 0;
+}
