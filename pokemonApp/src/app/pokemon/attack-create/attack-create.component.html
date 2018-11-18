@@ -1,0 +1,65 @@
+<div class="jumbotron">
+  <h1 style="text-align: center">Add an Attack</h1>
+  <form (submit)="onSubmit(attacksForm)" #attacksForm="ngForm">
+    <mat-card>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput type="number" ngModel name="attackNumber" placeholder="Enter Attack No." required #attackNo="ngModel">
+        </div>
+        <mat-error *ngIf="attackNo.invalid">
+          Please enter an attack number
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput name="attackName" ngModel placeholder="Enter Attack Name" required #attackName="ngModel">
+        </div>
+        <mat-error *ngIf="attackName.invalid">
+          Please enter an attack name
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput name="powerpoints" ngModel placeholder="Enter Power Points" required #pp="ngModel">
+        </div>
+        <mat-error *ngIf="pp.invalid">
+          Please enter the power points
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput name="power" ngModel placeholder="Enter Power" required #power="ngModel">
+        </div>
+        <mat-error *ngIf="power.invalid">
+          Please enter the power
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput name="accuracy" ngModel placeholder="Enter Accuracy" required #accuracy="ngModel">
+        </div>
+        <mat-error *ngIf="accuracy.invalid">
+          Please enter the accuracy
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput name="type" ngModel placeholder="Entery Type" required #type="ngModel">
+        </div>
+        <mat-error *ngIf="type.invalid">
+          Please enter a Type
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <div class="input-group">
+          <input matInput name="category" ngModel placeholder="Enter Category" required #category="ngModel">
+        </div>
+        <mat-error *ngIf="category.invalid">
+          Please enter a category
+        </mat-error>
+      </mat-form-field>
+      <hr>
+      <button class="btn btn-primary" type="submit">Add</button>
+    </mat-card>
+  </form>
+</div>

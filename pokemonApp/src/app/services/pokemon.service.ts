@@ -28,13 +28,13 @@ export class PokemonService {
 
   private attackList: Attacks[] = [];
   private allAttacksListUpdated = new Subject<Attacks[]>();
-  private queriedPokemonAttackList = new Subject<Attacks[]>();
+  private selectedAttackFeed = new Subject<Attacks[]>();
   addPokemon(p: Pokemon) {
     const url = 'http://localhost:3000/api/addPokemon';
 
-    this.http.post<{message: string, postId: string}>(url, p)
+    this.http.post<{message: string, pokemonId: string}>(url, p)
              .subscribe( (responseData) => {
-               const id = responseData.postId;
+               const id = responseData.pokemonId;
                p.id = id;
                this.pokemonList.push(p);
                this.pokemonUpdatedList.next([...this.pokemonList]);
@@ -42,7 +42,7 @@ export class PokemonService {
   }
 
   addAttack(a: Attacks) {
-    const url = 'http://localhost:3000/api/addAttack';
+    const url = 'http://localhost:3000/api/addAttack/';
 
     console.log(a.attackName);
 
@@ -56,6 +56,15 @@ export class PokemonService {
 
   }
 
+  getAttackOptions() {
+    const url = 'http://localhost:3000/api/getAttackOptions';
+
+    return this.http.get<{message: string, attacks: Attacks[]}>(url)
+                    .subscribe( (tranformedAttack) => {
+                      this.attackList = tranformedAttack.attacks;
+                      this.allAttacksListUpdated.next([...this.attackList]);
+                    });
+  }
   getPokemonOptions() {
     const url = 'http://localhost:3000/api/getPokemonOptions';
 
@@ -79,9 +88,17 @@ export class PokemonService {
     return this.pokemonUpdatedOptions.asObservable();
   }
 
+  getAttacksListUpdatedListener() {
+    return this.allAttacksListUpdated.asObservable();
+  }
+
   // Getting the feed of the selected pokemon
   addToSelectedPokemonFeed(pokemon: {id: string, kdex: number, pokemonName: string}) {
     this.selectedPokemonFeed.next(pokemon);
+  }
+
+  addToSelectedAttackFeed(attacks: Attacks[]) {
+    this.selectedAttackFeed.next([...attacks]);
   }
 
   // The Movset List Component will retrieve the value selected from the form
@@ -89,18 +106,24 @@ export class PokemonService {
     return this.selectedPokemonFeed.asObservable();
   }
 
+  getSelectedAttacks() {
+    return this.selectedAttackFeed.asObservable();
+  }
+
   /**Now that we have selected the pokemon from
    * Movset Create Component, we can get its moveset*/
-  queryForSelectedPokemon(pokemon: {id: string, kdex: number, pokemonName: string}) {
+  // Need to actually create an endpoint for this on the backend app
+  /*queryForSelectedPokemon(pokemon: {id: string, kdex: number, pokemonName: string}) {
     const url = `http://localhost:3000/api/getAttacks/${pokemon.id}/${pokemon.kdex}/${pokemon.pokemonName}`;
+    // alert(pokemon.id);
     this.http.get<{ message: string, response: any }>(url).subscribe((res) => {
       // alert(res.message + ' ' + res.response);
       this.attackList = [];
       this.queriedPokemonAttackList.next([...this.attackList]);
     });
-  }
+  }*/
 
-  getAttackListsFromQuery() {
+  /*getAttackListsFromQuery() {
     return this.queriedPokemonAttackList.asObservable();
-  }
+  }*/
 }

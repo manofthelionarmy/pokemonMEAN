@@ -6,7 +6,12 @@ const pokemonSchema = mongoose.Schema({
   types: [{type: String, required: true }],
   description: {type: String, required: true},
   height: {type: Number, required: true},
-  weight: {type: Number, required: true}
+  weight: {type: Number, required: true},
+  moveset: {type: mongoose.Schema.Types.ObjectId, ref: 'Moveset'},
+  evolution: {type: mongoose.Schema.Types.ObjectId, ref: 'Evolutions'},
+  weaknesses: {type: mongoose.Schema.Types.ObjectId, ref: 'Weaknesses'},
+  resistances: {type: mongoose.Schema.Types.ObjectId, ref: 'Resistances'},
+  abilities: {type: mongoose.Schema.Types.ObjectId, ref: 'Abilities'}
 });
 
 module.exports = mongoose.model('Pokemon', pokemonSchema);

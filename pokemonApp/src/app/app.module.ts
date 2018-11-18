@@ -14,6 +14,8 @@ import { PokemonListComponent } from './pokemon/pokemon-list/pokemon-list.compon
 import { MovesetCreateComponent } from './pokemon/moveset-create/moveset-create.component';
 import { MovesetListComponent } from './pokemon/moveset-list/moveset-list.component';
 import { RoutingModule } from './routing/routing.module';
+import { AttackCreateComponent } from './pokemon/attack-create/attack-create.component';
+import { AttackListComponent } from './pokemon/attack-list/attack-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { RoutingModule } from './routing/routing.module';
     PokemonCreateComponent,
     PokemonListComponent,
     MovesetCreateComponent,
-    MovesetListComponent
+    MovesetListComponent,
+    AttackCreateComponent,
+    AttackListComponent
   ],
   imports: [
     BrowserModule,

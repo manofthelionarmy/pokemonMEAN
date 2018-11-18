@@ -1,3 +1,5 @@
+import { Attacks } from './../../models/pokemon/attacks.model';
+import { map } from 'rxjs/operators';
 import { PokemonService } from './../../services/pokemon.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -10,33 +12,35 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class MovesetListComponent implements OnInit, OnDestroy {
 
   constructor(private pokemonService: PokemonService) { }
-  data = [{
-    attackNo: null,
-    attackName: null,
-    PP: null,
-    accuracy: null,
-    type: null,
-    category: null
-  }];
+  data: Attacks[];
 
   private selectedPokemonFeed: Subscription;
 
   private results: Subscription;
 
-  private pokemonToQueryFor: {id: string, kdex: number, pokemonName: string};
+  private selectedAttacksFeed: Subscription;
 
-  displayedColumns: string[] = ['attackNo', 'attackName', 'PP', 'accuracy', 'type', 'category'];
+  selectedPokemon: {id: string, kdex: number, pokemonName: string};
+
+  displayedColumns: string[] = ['attackNo', 'attackName', 'PP', 'accuracy', 'type', 'category', 'actions'];
   ngOnInit() {
     this.selectedPokemonFeed = this.pokemonService.getSelectedPokemon().subscribe((selectedPokemon) => {
-      this.pokemonToQueryFor = selectedPokemon;
-      this.pokemonService.queryForSelectedPokemon(this.pokemonToQueryFor);
+      this.selectedPokemon = selectedPokemon;
+      // this will get the latest pokemon in the 'select-pokemon-feed'
+      // and use it to query for the list of attacks belonging to that pokemon
+      // this.pokemonService.queryForSelectedPokemon(this.pokemonToQueryFor);
     });
 
-    this.results = this.pokemonService.getAttackListsFromQuery().subscribe();
+    // this.results = this.pokemonService.getAttackListsFromQuery().subscribe();
+    this.selectedAttacksFeed = this.pokemonService.getSelectedAttacks().subscribe( (selectedAttacks) => {
+      this.data = selectedAttacks;
+
+      console.log(this.data);
+    });
   }
 
   ngOnDestroy() {
     this.selectedPokemonFeed.unsubscribe();
-    this.results.unsubscribe();
+    this.selectedAttacksFeed.unsubscribe();
   }
 }

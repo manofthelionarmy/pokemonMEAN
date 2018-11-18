@@ -5,7 +5,7 @@ const Pokemon = require('./models/pokemon/pokemon');
 const Abilities = require('./models/pokemon/abilities');
 const Attacks = require('./models/pokemon/attacks');
 const Evolutions = require('./models/pokemon/evolution');
-const Movesets = require('./models/pokemon/moveset');
+const Moveset = require('./models/pokemon/moveset');
 const Resistances = require('./models/pokemon/resistance');
 const Weaknesses = require('./models/pokemon/weakness');
 const app = express();
@@ -39,14 +39,6 @@ app.use((req, res, next) => {
  * this endopint for the admin application.
  */
 app.post("/api/addPokemon", (req, res, next) => {
-  const pokemon = new Pokemon({
-    pokemonName: req.body.pokemonName,
-    kdex: req.body.kdex,
-    types: req.body.types,
-    description: req.body.description,
-    height: req.body.height,
-    weight: req.body.weight
-  });
 
   const ability = new Abilities({
     kdex: req.body.abilities.kdex,
@@ -70,8 +62,6 @@ app.post("/api/addPokemon", (req, res, next) => {
     weaknesses: req.body.weaknesses.weaknesses
   });
 
-  pokemon.save();
-
   ability.save();
 
   evolution.save();
@@ -80,15 +70,32 @@ app.post("/api/addPokemon", (req, res, next) => {
 
   weakness.save();
 
-  res.status(201).json({
-    message: 'Pokemon added successfully',
-    pokemonId: pokemon._id
+  const pokemon = new Pokemon({
+    pokemonName: req.body.pokemonName,
+    kdex: req.body.kdex,
+    types: req.body.types,
+    description: req.body.description,
+    height: req.body.height,
+    weight: req.body.weight,
+    movset: null,
+    evolution: evolution._id,
+    weaknesses: weakness._id,
+    resistances: resistance._id,
+    abilities: ability._id
+  });
+
+  pokemon.save().then((createdPokemon) => {
+    res.status(201).json({
+      message: 'Pokemon added successfully',
+      pokemonId: createdPokemon._id
+    });
   });
 
 });
 
 app.post("/api/addAttack", (req, res, next) => {
-  const attack = new Attacks({
+
+  attack = new Attacks({
     attackNumber: req.body.attackNumber,
     attackName: req.body.attackName,
     PP: req.body.PP,
@@ -98,12 +105,42 @@ app.post("/api/addAttack", (req, res, next) => {
     category: req.body.category
   });
 
-  attack.save();
-
-  res.status(201).json({
-    message: 'Attack Added Sucessfully',
-    attackId: attack._id
+  attack.save().then((created_attack) => {
+    res.status(201).json({
+      message: 'Attack Added Sucessfully',
+      attackId: created_attack._id
+    });
   });
+
+
+  /*Moveset.countDocuments({pokemonName: req.params.pokemonName}, (err, res) => {
+    if ( res == 0) {
+      moveset = new Moveset({
+        kdex: req.params.kdex,
+        pokemonName: req.params.pokemonName,
+        attacks: [attack._id]
+      });
+
+      moveset.save();
+
+      Pokemon.findOneAndUpdate({ _id: req.params.id }, { moveset: moveset._id }, { new: true }, (err, res) => {
+        console.log(res);
+      });
+    } else  {
+      Moveset.findOne({pokemonName: req.params.pokemonName}).populate('attacks').exec((err, res) => {
+        console.log('Deep populate\n' + res.attacks);
+        res.attacks.push(attack._id);
+
+        updatedAttackRefs = res.attacks;
+
+        Moveset.findOneAndUpdate({ pokemonName: req.params.pokemonName}, {attacks: updatedAttackRefs}, { new: true}, (err, result) => {
+          console.log(result);
+        });
+
+      });
+
+    }
+  });*/
 });
 
 app.get("/api/getPokemonOptions", (req, res, next) => {
@@ -117,10 +154,11 @@ app.get("/api/getPokemonOptions", (req, res, next) => {
   });
 });
 
-app.get("/api/getAttacks/:_id/:kdex/:pokemonName", (req, res, next) => {
+app.get("/api/getAttackOptions", (req, res, next) => {
 
-  var query = Movesets.find().where('pokemonName').equals(req.params.pokemonName);
-
+  /*var query = Pokemon.findById(req.params.id).where('pokemonName').equals(req.params.pokemonName)
+                     .populate('weaknesses resistances abilities evolution');
+  // console.log(req.params.pokemonName);
   query.exec((err, documents) => {
     if(err) {
       console.error('Problem with fetching');
@@ -133,6 +171,14 @@ app.get("/api/getAttacks/:_id/:kdex/:pokemonName", (req, res, next) => {
       message: 'Hello',
       response: documents
     });
+  });*/
+  var query = Attacks.find();
+
+  query.exec().then((retrieved_attacks) => {
+    res.status(200).json({
+      message: 'Attacks retrieved successfully',
+      attacks: retrieved_attacks
+    })
   });
 
 
