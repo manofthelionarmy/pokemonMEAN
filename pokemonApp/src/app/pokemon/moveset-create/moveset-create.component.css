@@ -1,5 +1,6 @@
 .jumbotron {
   background-color: aliceblue;
+  width: 100%;
 }
 mat-form-field {
   width: 100%;
@@ -10,4 +11,6 @@ mat-form-field {
 
 #first{
   margin-bottom: 1.5em;
+  width: 100%;
 }
+

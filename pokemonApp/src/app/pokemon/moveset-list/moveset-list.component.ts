@@ -26,6 +26,7 @@ export class MovesetListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.selectedPokemonFeed = this.pokemonService.getSelectedPokemon().subscribe((selectedPokemon) => {
       this.selectedPokemon = selectedPokemon;
+      this.data = [];
       // this will get the latest pokemon in the 'select-pokemon-feed'
       // and use it to query for the list of attacks belonging to that pokemon
       // this.pokemonService.queryForSelectedPokemon(this.pokemonToQueryFor);
@@ -37,6 +38,14 @@ export class MovesetListComponent implements OnInit, OnDestroy {
 
       console.log(this.data);
     });
+  }
+
+
+  removeAttack(attackRemoving: Attacks) {
+
+    console.log(attackRemoving.attackName);
+    this.data = this.data.filter(attack => attack.attackName !== attackRemoving.attackName);
+    this.pokemonService.addToSelectedAttackFeed(this.data);
   }
 
   ngOnDestroy() {
