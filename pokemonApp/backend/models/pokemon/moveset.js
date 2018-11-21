@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 const movesetSchema = mongoose.Schema({
-  pokemonName: {type: String},
-  kdex: {type: Number},
+  pokemon: {type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon'},
   attacks: [{type: mongoose.Schema.Types.ObjectId, ref: 'Attacks'}]
 });
 

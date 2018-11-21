@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader('Access-Control-Allow-Methods',
-    "GET, POST, PATCH, DELETE, OPTIONS");
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS");
   next();
 })
 
@@ -182,5 +182,68 @@ app.get("/api/getAttackOptions", (req, res, next) => {
   });
 
 
+});
+
+app.get("/api/checkMovesetExists/:id/:kdex/:pokemonName", (req, res, next) => {
+
+  var query = Moveset.findOne({pokemon: req.params.id}).populate('attacks');
+
+  query.exec().then((document) => {
+    if (document != null) {
+      console.log(document);
+      res.status(200).json({
+        message: `Entry does exist`,
+        exists: true,
+        moveset: document
+      });
+    } else {
+      console.log(document);
+      res.status(200).json({
+        message: `Entry doesn't exist`,
+        exists: false,
+        moveset: null
+      });
+    }
+  });
+});
+
+app.post("/api/addMoveset/:id/:kdex/:pokemonName", (req, res, next) => {
+
+  var attackIds = [];
+  for(var i = 0; i < req.body.length; ++i) {
+    attackIds.push( req.body[i].id);
+  }
+
+  moveset = new Moveset({
+    pokemon: req.params.id,
+    attacks: attackIds
+  });
+
+  moveset.save().then((documents) => {
+    res.status(201).json({
+      message: 'Moveset added successfully'
+    })
+  });
+});
+
+app.put("/api/updateMoveset/:id/:kdex/:pokemonName", (req, res, next) => {
+  var updateStatement = Moveset.findOneAndUpdate({ id: req.params.id }).exec((err, res) => {
+    let retrieved_attacks = [];
+    retrieved_attacks = res.attacks;
+
+    retrieved_attacks = retrieved_attacks.concat(attackIds);
+    console.log(retrieved_attacks);
+    /*for(var i = 0; i < attackIds.length; ++i) {
+      console.log(attackIds[i]);
+    }*/
+    res.status(201).json({
+      message: 'Moveset updated succesfully'
+    })
+  });
+
+  /** Need to run another query because asyncrhonously, the moveset hasn't been cre */
+  res.status(201).json({
+    message: 'Action performed successfully'
+  })
 });
 module.exports = app;

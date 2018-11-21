@@ -1,5 +1,5 @@
-<h1 *ngIf="selectedPokemon == undefined">Moveset</h1>
-<h1 *ngIf="selectedPokemon != undefined">{{selectedPokemon.pokemonName}}'s Moveset</h1>
+<h1 *ngIf="selectedPokemonName == ''">Moveset</h1>
+<h1 *ngIf="selectedPokemonName != ''">{{selectedPokemonName}}'s Moveset</h1>
 <table mat-table [dataSource]="data" class="mat-elevation-z8">
   <ng-container matColumnDef="attackNo">
     <th mat-header-cell *matHeaderCellDef>Attack No.</th>

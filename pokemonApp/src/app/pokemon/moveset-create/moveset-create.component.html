@@ -1,15 +1,15 @@
 <div class="container">
   <div class="row">
-    <div class="col-auto">
+    <div class="col-md-6 col-xs-12">
       <div class="jumbotron">
         <h1 style="text-align: left">Create Moveset</h1>
         <!--Some reason, the editor says this is wrong, but it is working-->
-        <form>
+        <form (submit)="addMoveset(movesetForm)" #movesetForm="ngForm" [formGroup]="movesetFormGroup">
           <mat-card id="first">
             <mat-form-field>
               <mat-select placeholder="Select Pokemon" name="selectedPokemon" [formControl]="pokmonControl" required
                 disableOptionCentering="false" (selectionChange)="onselect($event.value)">
-                <!-- causing me some errors <mat-option>--</mat-option>-->
+                <mat-option>--</mat-option>
                 <mat-option *ngFor="let s of selectOptions" [value]="s">
                   {{s.pokemonName}}
                 </mat-option>
@@ -21,6 +21,7 @@
             <mat-form-field>
               <mat-select placeholder="Select Attack" name="selectedAttack" [formControl]="attackControl" required
                 disableOptionCentering="false" (selectionChange)="onselectAttack($event.value)">
+                <mat-option>--</mat-option>
                 <mat-option *ngFor="let a of selectAttackOptions" [value]="a">
                   {{a.attackName}}
                 </mat-option>
@@ -29,11 +30,13 @@
                 Please select an attack
               </mat-error>
             </mat-form-field>
+            <hr>
+            <button class="btn btn-primary" type="submit">Submit</button>
           </mat-card>
         </form>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-md-6 col-xs-12">
       <app-moveset-list></app-moveset-list>
     </div>
   </div>
