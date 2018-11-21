@@ -131,7 +131,7 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
   }
 
   addMoveset(form: NgForm) {
-    if (form.invalid) {
+    if (form.invalid && this.selectedAttacks.length === 0) {
       return;
     }
 
