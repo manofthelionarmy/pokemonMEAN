@@ -10,16 +10,28 @@ import { Injectable } from '@angular/core';
 })
 export class AttacksService {
 
-
+  // this value is used as a buffer to store all of the attacks from the db
   private attackList: Attacks[] = [];
+  // this will store all the atacks in a feed. This is important for mat select to show the options
   private allAttacksListUpdated = new Subject<Attacks[]>();
+
+  // this array will store all the selected attacks from mat-select
   private selectedAttacks: Attacks[] = [];
+  // this array store the selected attack from mat-select in the feed
   private selectedAttackFeed = new Subject<Attacks>();
+  // this array will store all of the selected attacks in the the feed
   private allSelectedAttacks = new Subject<Attacks[]>();
+
+  // this will tell us if the moveset for a pokemon exists already
   private moveset_exists: boolean;
+
+  // this will store the moveset_exists value in a feed
   private moveset_existsFeed = new BehaviorSubject<boolean>(false);
 
+  // this will store the selected moveset in a feed
   private selectedMoveset = new Subject<Moveset>();
+
+  private clearSelectedAttacks = new Subject<boolean>();
 
   constructor(private http: HttpClient) { }
 
@@ -38,14 +50,23 @@ export class AttacksService {
 
   }
 
-  addMoveset(attacks: { id: string }[], selectedPokemon: { id: string, kdex: number, pokemonName: string }) {
-    const url = `http://localhost:3000/api/addMoveset/${selectedPokemon.id}/${selectedPokemon.kdex}/${selectedPokemon.pokemonName}`;
+  // something is broken with this.
+  // maybe I have to fix the req body!
+  addMoveset(moveset: {attacks: string[], pokemonId: string}) {
+    const url = `http://localhost:3000/api/addMoveset`;
 
-    this.http.post<{ message: string }>(url, attacks).subscribe();
+    this.http.post<{ message: string }>(url, moveset).subscribe();
   }
 
   getMoveset(selectedPokemon: {id: string, kdex: number, pokemonName: string}) {
     const url = `http://localhost:3000/api/getMoveset/${selectedPokemon.id}`;
+  }
+
+  updateMoveset(m: {id: string, pokemonId: string, attacks: string[]}) {
+    const url = 'http://localhost:3000/api/updateMoveset';
+    const argument = m;
+    this.http.put<{message: string}>(url, argument).subscribe();
+
   }
 
   checkIfMovesetExists(selectedPokemon: { id: string, kdex: number, pokemonName: string }) {
@@ -151,5 +172,13 @@ export class AttacksService {
   // if the moveset exists, will get the selected pokemon's moveset from the feed
   getMovesetUpdateListener() {
     return this.selectedMoveset.asObservable();
+  }
+
+  clearSelectedAttacksFeeed() {
+    this.clearSelectedAttacks.next(true);
+  }
+
+  getClearSignal() {
+    return this.clearSelectedAttacks.asObservable();
   }
 }

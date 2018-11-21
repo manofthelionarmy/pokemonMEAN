@@ -26,6 +26,8 @@ export class MovesetListComponent implements OnInit, OnDestroy {
 
   private movesetFeed: Subscription;
 
+  private clearSelectedAttacksListener: Subscription;
+
   selectedPokemonName = '';
 
   selectedPokemon: {id: string, kdex: number, pokemonName: string};
@@ -57,6 +59,8 @@ export class MovesetListComponent implements OnInit, OnDestroy {
         this.data = this.data.concat(selectedAttack);
       }
 
+      console.log(this.data);
+
     });
 
     this.movesetFeed = this.attackService.getMovesetUpdateListener().subscribe((value) => {
@@ -67,6 +71,14 @@ export class MovesetListComponent implements OnInit, OnDestroy {
         this.data = this.attacksFromMoveList;
 
         this.attackService.addToAllSelectedAttacksFeed2(this.attacksFromMoveList);
+      }
+    });
+
+    this.clearSelectedAttacksListener = this.attackService.getClearSignal().subscribe((value) => {
+
+      if (value) {
+        this.data.splice(0);
+        this.data = [...this.data];
       }
     });
   }
@@ -83,7 +95,7 @@ export class MovesetListComponent implements OnInit, OnDestroy {
 
     if (index !== - 1) {
       this.data.splice(index, 1);
-      // need to notify the DOM that the data array has been updated
+      // need to notify the DOM that the data array has been updated by setting it equal to the spread
       this.data = [...this.data];
       console.log(this.data);
       this.attackService.addToAllSelectedAttacksFeed2(this.data);
@@ -94,5 +106,6 @@ export class MovesetListComponent implements OnInit, OnDestroy {
     this.selectedPokemonFeed.unsubscribe();
     this.selectedAttacksFeed.unsubscribe();
     this.movesetFeed.unsubscribe();
+    this.clearSelectedAttacksListener.unsubscribe();
   }
 }

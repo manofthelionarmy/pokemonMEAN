@@ -1,5 +1,7 @@
+import { Pokemon } from './../../models/pokemon/pokemon.model';
+import { Moveset } from './../../models/pokemon/movset.model';
 import { AttacksService } from './../../services/attacks.service';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatGridTileHeaderCssMatStyler } from '@angular/material';
 import { Attacks } from './../../models/pokemon/attacks.model';
 import { PokemonService } from './../../services/pokemon.service';
 import { Subscription } from 'rxjs';
@@ -33,7 +35,11 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
 
   private movesetExists: Subscription;
 
+  private movesetSub: Subscription;
+
   doesMovesetExist = false;
+
+  moveset: Moveset;
 
   pokmonControl: FormControl = new FormControl('', Validators.required);
 
@@ -71,13 +77,14 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
       this.selectedAttacks = attacks;
     });
 
+    // We extract the boolean value from the feed to see if the moveset already exists in the DB
     this.movesetExists = this.attackService.getMovesetExistFeedUpdateListener().subscribe((value) => {
       console.log('Does moveset exist(1)? ' + value);
       this.doesMovesetExist = value;
+    });
 
-      if (value) {
-        this.attackService.getMoveset(this.selectedPokemon);
-      }
+    this.movesetSub = this.attackService.getMovesetUpdateListener().subscribe((value) => {
+      this.moveset = value;
     });
 
   }
@@ -111,6 +118,7 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
       if (attack === undefined) {
         console.log('Cannot select undefined');
       } else {
+        console.log(attack.id);
         // instead, add a single attack to the feed
         /**Send the selected attack to the moveset-list component */
         this.attackService.addToSelectedAttackFeed(attack);
@@ -127,33 +135,39 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log('Adding the attacks');
-
-    console.log(this.selectedAttacks);
-
-    const attackIds: { id: string }[] = [];
-
-    this.selectedAttacks.forEach((a) => {
-      attackIds.push({ id: a.id });
+    const attackIds: string[] = [];
+    this.selectedAttacks.forEach( a => {
+      attackIds.push(a.id);
     });
 
-    // this.attackService.checkIfMovesetExists(this.selectedPokemon);
 
-   if (!this.doesMovesetExist) {
-     console.log('Adding Moveset');
-     this.attackService.addMoveset(attackIds, this.selectedPokemon);
-     this.selectedPokemon = null;
-   } else {
-     console.log('Updating Moveset');
 
-   }
+    if (!this.doesMovesetExist) {
+      console.log('Adding Moveset');
+      const moveset = {
+        pokemonId: this.selectedPokemon.id,
+        attacks: attackIds
+      };
+
+      this.attackService.addMoveset(moveset);
+    } else {
+      console.log('Updating Moveset');
+      const updateMoveset = {
+        id: this.moveset.id,
+        pokemonId: this.selectedPokemon.id,
+        attacks: attackIds
+      };
+
+      console.log(updateMoveset);
+
+      this.attackService.updateMoveset(updateMoveset);
+    }
 
     form.resetForm();
 
     this.attackService.removeAllFromSelectedAttackFeed();
 
-
-
+    this.attackService.clearSelectedAttacksFeeed();
 
     // This step is done to reset the Header above the table in the UI
     this.pokemonService.addToSelectedPokemonFeed({id: null, kdex: null, pokemonName: ''});

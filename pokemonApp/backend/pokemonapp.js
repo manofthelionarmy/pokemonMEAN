@@ -186,18 +186,36 @@ app.get("/api/getAttackOptions", (req, res, next) => {
 
 app.get("/api/checkMovesetExists/:id/:kdex/:pokemonName", (req, res, next) => {
 
-  var query = Moveset.findOne({pokemon: req.params.id}).populate('attacks');
-
+  var query = Moveset.findOne({pokemon: req.params.id}).populate('attacks pokemon').select('_id pokemon attacks');
+  /**Had to remap in here. */
   query.exec().then((document) => {
     if (document != null) {
-      console.log(document);
+      console.log('Here: \n' + document);
+      console.log(document.attacks);
+      console.log(document.pokemon);
       res.status(200).json({
         message: `Entry does exist`,
         exists: true,
-        moveset: document
+        moveset: {
+          id: document._id,
+          kdex: document.pokemon.kdex,
+          pokemonName: document.pokemon.pokemonName,
+          attacks: document.attacks.map( a => {
+            return {
+              id: a.id,
+              attackName: a.attackName,
+              attackNumber: a.attackNumber,
+              PP: a.PP,
+              power: a.power,
+              accuracy: a.accuracy,
+              type: a.type,
+              category: a.category
+            }
+          })
+        }
       });
     } else {
-      console.log(document);
+      console.log('Actually here: ' + document);
       res.status(200).json({
         message: `Entry doesn't exist`,
         exists: false,
@@ -207,43 +225,28 @@ app.get("/api/checkMovesetExists/:id/:kdex/:pokemonName", (req, res, next) => {
   });
 });
 
-app.post("/api/addMoveset/:id/:kdex/:pokemonName", (req, res, next) => {
-
-  var attackIds = [];
-  for(var i = 0; i < req.body.length; ++i) {
-    attackIds.push( req.body[i].id);
-  }
+app.post("/api/addMoveset", (req, res, next) => {
 
   moveset = new Moveset({
-    pokemon: req.params.id,
-    attacks: attackIds
+    pokemon: req.body.pokemonId,
+    attacks: req.body.attacks
   });
 
-  moveset.save().then((documents) => {
+  moveset.save();
+
+  Pokemon.findOneAndUpdate({_id: req.body.pokemonId}, {moveset: moveset._id}, {new: true}).exec().then((document) => {
     res.status(201).json({
       message: 'Moveset added successfully'
     })
   });
 });
 
-app.put("/api/updateMoveset/:id/:kdex/:pokemonName", (req, res, next) => {
-  var updateStatement = Moveset.findOneAndUpdate({ id: req.params.id }).exec((err, res) => {
-    let retrieved_attacks = [];
-    retrieved_attacks = res.attacks;
-
-    retrieved_attacks = retrieved_attacks.concat(attackIds);
-    console.log(retrieved_attacks);
-    /*for(var i = 0; i < attackIds.length; ++i) {
-      console.log(attackIds[i]);
-    }*/
-    res.status(201).json({
-      message: 'Moveset updated succesfully'
+app.put("/api/updateMoveset/", (req, res, next) => {
+  var updateStatement = Moveset.findOneAndUpdate({ _id: req.body.id }, {attacks: req.body.attacks}, {new: true}).populate('attacks').exec((err, document) => {
+    console.log(document.attacks);
+    res.status(200).json({
+      message: 'Updated successfully'
     })
   });
-
-  /** Need to run another query because asyncrhonously, the moveset hasn't been cre */
-  res.status(201).json({
-    message: 'Action performed successfully'
-  })
 });
 module.exports = app;
