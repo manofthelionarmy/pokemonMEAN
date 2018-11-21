@@ -4,9 +4,10 @@ import { Weaknesses } from './../../models/pokemon/weaknesses.model';
 import { Evolutions } from './../../models/pokemon/evolutions.model';
 import { Pokemon } from './../../models/pokemon/pokemon.model';
 import { NgForm } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Resistances } from 'src/app/models/pokemon/resistances.model';
 import { MatSnackBar } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-create',
@@ -16,6 +17,12 @@ import { MatSnackBar } from '@angular/material';
 export class PokemonCreateComponent implements OnInit {
 
   constructor(private pokemonService: PokemonService, private snackbar: MatSnackBar) { }
+
+  /**Stuff Rolly added.  */
+  public selectedPokemon: {id: string, kdex: number, pokemonName: string};
+  public selectedPokemonList: Pokemon[] = [];
+
+  /**Stuff Rolly added ENDS */
 
   ngOnInit() {
   }

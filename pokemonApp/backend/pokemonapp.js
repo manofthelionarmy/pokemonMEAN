@@ -10,8 +10,10 @@ const Resistances = require('./models/pokemon/resistance');
 const Weaknesses = require('./models/pokemon/weakness');
 const app = express();
 
-const cloudmongoUrl = 'mongodb+srv://mando:1KBNWdXuNKTAJb3e@cluster0-ewz1r.mongodb.net/pokemon?retryWrites=true';
-
+const cloudmongoUrl = 'mongodb+srv://Saito:lvCI9gV7Q5hBlZnM@cluster0-6b54n.mongodb.net/test?retryWrites=true';
+/**
+ * const cloudmongoUrl = 'mongodb+srv://mando:1KBNWdXuNKTAJb3e@cluster0-ewz1r.mongodb.net/pokemon?retryWrites=true';
+*/
 mongoose.connect(cloudmongoUrl, { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to database!');

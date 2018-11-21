@@ -110,6 +110,13 @@ export class PokemonService {
     return this.selectedAttackFeed.asObservable();
   }
 
+  /**
+   * For pokemon-list, Rolly.
+   */
+  getSelectedPokemonList() {
+    return this.pokemonUpdatedList.asObservable();
+  }
+
   /**Now that we have selected the pokemon from
    * Movset Create Component, we can get its moveset*/
   // Need to actually create an endpoint for this on the backend app
