@@ -94,6 +94,7 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
     this.attackListSubscription.unsubscribe();
     this.selectedAttackListSub.unsubscribe();
     this.movesetExists.unsubscribe();
+    this.movesetSub.unsubscribe();
   }
 
   onselect(pokemon): void {

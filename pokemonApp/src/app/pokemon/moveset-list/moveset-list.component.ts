@@ -20,8 +20,6 @@ export class MovesetListComponent implements OnInit, OnDestroy {
   private doesMovesetExist = false;
   private selectedPokemonFeed: Subscription;
 
-  private results: Subscription;
-
   private selectedAttacksFeed: Subscription;
 
   private movesetFeed: Subscription;
