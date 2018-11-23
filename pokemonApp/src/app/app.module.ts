@@ -46,7 +46,7 @@ import { AttackListComponent } from './pokemon/attack-list/attack-list.component
     MatSelectModule,
     ReactiveFormsModule,
     MatSnackBarModule,
-    MatTableModule
+    MatTableModule,
 
   ],
   providers: [],

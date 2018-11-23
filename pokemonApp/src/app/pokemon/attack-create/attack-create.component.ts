@@ -1,3 +1,4 @@
+import { AttacksService } from './../../services/attacks.service';
 import { PokemonService } from './../../services/pokemon.service';
 import { MatSnackBar } from '@angular/material';
 import { Attacks } from './../../models/pokemon/attacks.model';
@@ -11,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AttackCreateComponent implements OnInit {
 
-  constructor(private snackbar: MatSnackBar, private pokemonService: PokemonService) { }
+  constructor(private snackbar: MatSnackBar, private pokemonService: PokemonService, private attackService: AttacksService) { }
 
   ngOnInit() {
   }
@@ -32,7 +33,7 @@ export class AttackCreateComponent implements OnInit {
       category: form.value.category
     };
 
-    this.pokemonService.addAttack(attack);
+    this.attackService.addAttack(attack);
 
     form.resetForm();
 

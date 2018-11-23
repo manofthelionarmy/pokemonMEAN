@@ -30,7 +30,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader('Access-Control-Allow-Methods',
-    "GET, POST, PATCH, DELETE, OPTIONS");
+    "GET, POST, PATCH, PUT, DELETE, OPTIONS");
   next();
 })
 
@@ -182,5 +182,71 @@ app.get("/api/getAttackOptions", (req, res, next) => {
   });
 
 
+});
+
+app.get("/api/checkMovesetExists/:id/:kdex/:pokemonName", (req, res, next) => {
+
+  var query = Moveset.findOne({pokemon: req.params.id}).populate('attacks pokemon').select('_id pokemon attacks');
+  /**Had to remap in here. */
+  query.exec().then((document) => {
+    if (document != null) {
+      console.log('Here: \n' + document);
+      console.log(document.attacks);
+      console.log(document.pokemon);
+      res.status(200).json({
+        message: `Entry does exist`,
+        exists: true,
+        moveset: {
+          id: document._id,
+          kdex: document.pokemon.kdex,
+          pokemonName: document.pokemon.pokemonName,
+          attacks: document.attacks.map( a => {
+            return {
+              id: a.id,
+              attackName: a.attackName,
+              attackNumber: a.attackNumber,
+              PP: a.PP,
+              power: a.power,
+              accuracy: a.accuracy,
+              type: a.type,
+              category: a.category
+            }
+          })
+        }
+      });
+    } else {
+      console.log('Actually here: ' + document);
+      res.status(200).json({
+        message: `Entry doesn't exist`,
+        exists: false,
+        moveset: null
+      });
+    }
+  });
+});
+
+app.post("/api/addMoveset", (req, res, next) => {
+
+  moveset = new Moveset({
+    pokemon: req.body.pokemonId,
+    attacks: req.body.attacks
+  });
+
+  moveset.save();
+
+  Pokemon.findOneAndUpdate({_id: req.body.pokemonId}, {moveset: moveset._id}, {new: true}).exec().then((document) => {
+    res.status(201).json({
+      message: 'Moveset added successfully'
+    })
+  });
+});
+
+app.put("/api/updateMoveset/", (req, res, next) => {
+  var updateStatement = Moveset.findOneAndUpdate({ _id: req.body.id }, {attacks: req.body.attacks}, {new: true}).populate('attacks').exec((err, document) => {
+    console.log(document.attacks);
+    res.status(200).json({
+      message: 'Updated successfully'
+    })
+  });
 });
 module.exports = app;
