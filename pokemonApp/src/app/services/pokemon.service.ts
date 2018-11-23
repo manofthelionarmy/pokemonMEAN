@@ -23,6 +23,10 @@ export class PokemonService {
   private pokemonList: Pokemon[] = [];
   private pokemonUpdatedList = new Subject<Pokemon[]>();
 
+
+  private pokemonGetList: {id: string, kdex: number, pokemonName: string}[] = [];
+  private pokemonGetUpdateList = new Subject<{id: string, kdex: number, pokemonName: string}[]>();
+
   private selectedPokemon: {id: string, kdex: number, pokemonName: string};
   private selectedPokemonFeed = new Subject<{id: string, kdex: number, pokemonName: string}>();
 
@@ -57,6 +61,32 @@ export class PokemonService {
                     });
   }
 
+  getPokemon() {
+    const url = 'http://localhost:3000/api/getPokemon';
+
+    return this.http.get<{messages: string, pokemon: any[]}>(url)
+                    .pipe( map( (responseData) => {
+                      return responseData.pokemon.map( p => {
+                        return {
+                          id: p.id,
+                          kdex: p.kdex,
+                          pokemonName: p.pokemonName
+                        };
+                      });
+                    }))
+                    .subscribe((responseData) => {
+
+                      this.pokemonGetList = responseData;
+
+                      this.pokemonGetUpdateList.next([...this.pokemonGetList]);
+
+                    });
+    /*return this.http.get<{messages: string, pokemon: {id: string, kdex: number, pokemonName: string}}>(url)
+                    .subscribe((responseData) => {
+                      console.log(responseData);
+                    });*/
+  }
+
   getPokemonOptionsUpdateListener() {
     return this.pokemonUpdatedOptions.asObservable();
   }
@@ -69,5 +99,9 @@ export class PokemonService {
   // The Movset List Component will retrieve the value selected from the form
   getSelectedPokemon() {
     return this.selectedPokemonFeed.asObservable();
+  }
+
+  getPokemonUpdatedListListner() {
+    return this.pokemonGetUpdateList.asObservable();
   }
 }

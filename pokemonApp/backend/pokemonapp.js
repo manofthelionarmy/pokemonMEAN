@@ -249,4 +249,21 @@ app.put("/api/updateMoveset/", (req, res, next) => {
     })
   });
 });
+
+app.get("/api/getPokemon", (req, res, next) => {
+  var pokemonQuery = Pokemon.find().select('_id kdex pokemonName');
+  pokemonQuery.exec().then((data) => {
+    console.log(data);
+    res.status(200).json({
+      messages: 'Pokemon retrieved successfully',
+      pokemon: data.map( (p) => {
+        return {
+          id: p._id,
+          kdex: p.kdex,
+          pokemonName: p.pokemonName
+        }
+      })
+    });
+  });
+});
 module.exports = app;
