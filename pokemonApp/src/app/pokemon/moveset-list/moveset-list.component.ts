@@ -39,7 +39,7 @@ export class MovesetListComponent implements OnInit, OnDestroy {
 
       this.selectedPokemon = selectedPokemon;
       this.selectedPokemonName = this.selectedPokemon.pokemonName;
-
+      this.data.splice(0);
       // this.attackService.checkIfMovesetExists(this.selectedPokemon);
       // this.data = [];
       // this will get the latest pokemon in the 'select-pokemon-feed'
