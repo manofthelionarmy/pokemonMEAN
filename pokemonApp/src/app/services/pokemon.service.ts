@@ -83,10 +83,7 @@ export class PokemonService {
                       this.pokemonGetListUpdated.next([...this.pokemonGetList]);
 
                     });
-    /*return this.http.get<{messages: string, pokemon: {id: string, kdex: number, pokemonName: string}}>(url)
-                    .subscribe((responseData) => {
-                      console.log(responseData);
-                    });*/
+
   }
 
   getPokemonOptionsUpdateListener() {
