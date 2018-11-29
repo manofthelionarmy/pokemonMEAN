@@ -1,3 +1,23 @@
-<ul>
-  <li *ngFor="let poke of pokemonList">{{poke.kdex}} {{poke.pokemonName}} {{poke.types}}</li>
-</ul>
+<!--<ul>
+  <li *ngFor="let poke of pokemonList">
+    <p>
+      Kdex: {{poke.kdex}}
+    </p>
+    <p>
+      {{poke.pokemonName}}
+    </p>
+    <p>
+      {{poke.types}}
+    </p>
+  </li>
+</ul>-->
+
+<table>
+  <tr *ngFor="let l of linkedList">
+    <td *ngFor="let n of l.pokemonNodeLists">
+      <p>Kdex: {{n.kdex}}</p>
+      <p>{{n.pokemonName}}</p>
+      <p>{{n.types}}</p>
+    </td>
+  </tr>
+</table>
