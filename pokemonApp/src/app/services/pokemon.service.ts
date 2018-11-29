@@ -23,6 +23,10 @@ export class PokemonService {
   private pokemonList: Pokemon[] = [];
   private pokemonUpdatedList = new Subject<Pokemon[]>();
 
+  // Used for pokemon-list to display the list of pokemon (pokedex)
+  private pokemonGetList: {id: string, kdex: number, pokemonName: string, types: string} [] = [];
+  private pokemonGetListUpdated = new Subject<{id: string, kdex: number, pokemonName: string, types: string}[]>();
+
   private selectedPokemon: {id: string, kdex: number, pokemonName: string};
   private selectedPokemonFeed = new Subject<{id: string, kdex: number, pokemonName: string}>();
 
@@ -57,6 +61,31 @@ export class PokemonService {
                     });
   }
 
+  // for pokemon-list Won't work for some reason
+  getPokemon() {
+    const url = 'http://localhost:3000/api/getPokemon';
+
+    return this.http.get<{messages: string, pokemon: any[]}>(url)
+                    .pipe( map( (responseData) => {
+                      return responseData.pokemon.map( p => {
+                        return {
+                          id: p.id,
+                          kdex: p.kdex,
+                          pokemonName: p.pokemonName,
+                          types: p.types
+                        };
+                      });
+                    }))
+                    .subscribe((responseData) => {
+
+                      this.pokemonGetList = responseData;
+
+                      this.pokemonGetListUpdated.next([...this.pokemonGetList]);
+
+                    });
+
+  }
+
   getPokemonOptionsUpdateListener() {
     return this.pokemonUpdatedOptions.asObservable();
   }
@@ -70,4 +99,10 @@ export class PokemonService {
   getSelectedPokemon() {
     return this.selectedPokemonFeed.asObservable();
   }
+
+  // Used for pokemon-list and will be able to access desired data
+  getPokemonGetListUpdatedListener() {
+    return this.pokemonGetListUpdated.asObservable();
+  }
+
 }
