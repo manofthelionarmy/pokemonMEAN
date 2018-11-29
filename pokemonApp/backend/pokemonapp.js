@@ -10,7 +10,7 @@ const Resistances = require('./models/pokemon/resistance');
 const Weaknesses = require('./models/pokemon/weakness');
 const app = express();
 
-const cloudmongoUrl = 'mongodb+srv://mando:1KBNWdXuNKTAJb3e@cluster0-ewz1r.mongodb.net/pokemon?retryWrites=true';
+const cloudmongoUrl = 'mongodb+srv://Saito:lvCI9gV7Q5hBlZnM@cluster0-6b54n.mongodb.net/node-angular?retryWrites=true';
 
 mongoose.connect(cloudmongoUrl, { useNewUrlParser: true })
   .then(() => {
@@ -250,3 +250,24 @@ app.put("/api/updateMoveset/", (req, res, next) => {
   });
 });
 module.exports = app;
+
+// query for pokemon-list. Using getPokemonList() from pokemon.service
+app.get("/api/getPokemon", (req, res, next) => {
+  var getListQuery = Pokemon.find().select('_id kdex pokemonName types');
+  getListQuery.sort({kdex: 'asc'}); //sorts the queries in ascending order based on the kdex number
+  getListQuery.exec().then((data) => {
+    console.log(data);
+    res.status(200).json({
+      messages: "Pokemon list get - success",
+      pokemon: data.map( (poke) => {
+        return {
+          id: poke._id,
+          kdex: poke.kdex,
+          pokemonName: poke.pokemonName,
+          types: poke.types
+        }
+      })
+    })
+  })
+
+});
