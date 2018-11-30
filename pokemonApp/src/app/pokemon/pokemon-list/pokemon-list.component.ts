@@ -35,7 +35,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     this.pokemonService.getPokemon();
     this.pokeListSubs = this.pokemonService.getPokemonGetListUpdatedListener().subscribe((pokeArr) => {
       console.log(pokeArr);
-      this.pokemonList = pokeArr;
+      this.pokemonList = pokeArr.sort((s) => s.kdex);
       // let count = 0;
       const pokemonNodeList: { id: string, kdex: number, pokemonName: string, types: string }[] = [];
 
@@ -67,6 +67,10 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     /**
      * part of the taable
      */
+    const p = document.getElementsByClassName('item');
+
+
+
   }
 
   ngOnDestroy() {

@@ -115,35 +115,6 @@ app.post("/api/addAttack", (req, res, next) => {
     });
   });
 
-
-  /*Moveset.countDocuments({pokemonName: req.params.pokemonName}, (err, res) => {
-    if ( res == 0) {
-      moveset = new Moveset({
-        kdex: req.params.kdex,
-        pokemonName: req.params.pokemonName,
-        attacks: [attack._id]
-      });
-
-      moveset.save();
-
-      Pokemon.findOneAndUpdate({ _id: req.params.id }, { moveset: moveset._id }, { new: true }, (err, res) => {
-        console.log(res);
-      });
-    } else  {
-      Moveset.findOne({pokemonName: req.params.pokemonName}).populate('attacks').exec((err, res) => {
-        console.log('Deep populate\n' + res.attacks);
-        res.attacks.push(attack._id);
-
-        updatedAttackRefs = res.attacks;
-
-        Moveset.findOneAndUpdate({ pokemonName: req.params.pokemonName}, {attacks: updatedAttackRefs}, { new: true}, (err, result) => {
-          console.log(result);
-        });
-
-      });
-
-    }
-  });*/
 });
 
 app.get("/api/getPokemonOptions", (req, res, next) => {
@@ -159,22 +130,6 @@ app.get("/api/getPokemonOptions", (req, res, next) => {
 
 app.get("/api/getAttackOptions", (req, res, next) => {
 
-  /*var query = Pokemon.findById(req.params.id).where('pokemonName').equals(req.params.pokemonName)
-                     .populate('weaknesses resistances abilities evolution');
-  // console.log(req.params.pokemonName);
-  query.exec((err, documents) => {
-    if(err) {
-      console.error('Problem with fetching');
-    }
-    else {
-      console.log('Result of query:\n' + documents);
-    }
-
-    res.status(200).json({
-      message: 'Hello',
-      response: documents
-    });
-  });*/
   var query = Attacks.find();
 
   query.exec().then((retrieved_attacks) => {
