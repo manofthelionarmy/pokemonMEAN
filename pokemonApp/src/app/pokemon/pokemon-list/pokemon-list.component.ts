@@ -35,26 +35,40 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     this.pokemonService.getPokemon();
     this.pokeListSubs = this.pokemonService.getPokemonGetListUpdatedListener().subscribe((pokeArr) => {
       console.log(pokeArr);
-      this.pokemonList = pokeArr.sort((s) => s.kdex);
-      // let count = 0;
-      const pokemonNodeList: { id: string, kdex: number, pokemonName: string, types: string }[] = [];
+      this.pokemonList = pokeArr;
 
+      let row = 0;
       for (let i = 0; i < this.pokemonList.length; i = i + 1) {
 
-        pokemonNodeList.push({
+
+        const pItem = {
           id: this.pokemonList[i].id,
           kdex: this.pokemonList[i].kdex,
           pokemonName: this.pokemonList[i].pokemonName,
           types: this.pokemonList[i].types
-        });
+        };
 
-
-
-        if ( (i + 1)  % 2 === 0) {
+        /**If we have reached the 8th pokemon, create a new row*/
+        if ( (i)  % 8 === 0 && i !== 0) {
           const l = {
-            pokemonNodeLists: pokemonNodeList
+            pokemonNodeLists: [pItem]
           };
           this.linkedList.push(l);
+          row = row + 1;
+        } else {
+          /**Otherwise, if the linkedList is empty initalize it. If it is not empty, keep adding
+           * <td>'s to the current HTML <tr> in the HTML <table>
+           */
+          if ( this.linkedList.length === 0 ) {
+            const l =  {
+              pokemonNodeLists: [pItem]
+            };
+            this.linkedList.push(l);
+          } else {
+            this.linkedList[row].pokemonNodeLists.push(pItem);
+            this.linkedList[row].pokemonNodeLists = [...this.linkedList[row].pokemonNodeLists];
+          }
+
         }
       }
 
