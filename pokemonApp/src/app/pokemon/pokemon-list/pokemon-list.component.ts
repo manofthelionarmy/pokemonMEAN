@@ -3,6 +3,7 @@ import { map } from 'rxjs/operators';
 import { PokemonService } from './../../services/pokemon.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { type } from 'os';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -15,6 +16,12 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   private pokeListSubs: Subscription;
 
+  private Colors = {
+    grass: '#0b7c38',
+    fire: 'orange',
+    water: 'blue',
+    electric: 'gold'
+  };
   pokemonList: {id: string, kdex: number, pokemonName: string, types: string}[] = [];
 
   /**
@@ -79,16 +86,27 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     });
 
     /**
-     * part of the taable
+     * part of the table
      */
     const p = document.getElementsByClassName('item');
 
-
+    console.log(p);
 
   }
 
   ngOnDestroy() {
     this.pokeListSubs.unsubscribe();
+  }
+
+  changeColor(types: string): string {
+
+    /*if ( types[0].toLowerCase() === 'grass') {
+      console.log('here');
+      return `#0b7c38`;
+    }*/
+
+    console.log(this.Colors['grass']);
+    return this.Colors[types[0].toLowerCase()];
   }
 
 }
