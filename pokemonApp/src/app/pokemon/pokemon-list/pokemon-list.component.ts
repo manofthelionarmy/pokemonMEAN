@@ -104,8 +104,6 @@ export class PokemonListComponent implements OnInit, OnDestroy {
       console.log('here');
       return `#0b7c38`;
     }*/
-
-    console.log(this.Colors['grass']);
     return this.Colors[types[0].toLowerCase()];
   }
 

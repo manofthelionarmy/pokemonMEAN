@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'list', component: PokemonListComponent},
   {path: 'moveset', component: MovesetCreateComponent},
   {path: 'attack', component: AttackCreateComponent},
-  {path: 'display', component: DashboardComponent}
+  {path: 'display/:id', component: DashboardComponent}
 ];
 
 @NgModule({

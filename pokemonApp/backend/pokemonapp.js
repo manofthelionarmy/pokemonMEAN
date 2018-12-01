@@ -228,4 +228,40 @@ app.get("/api/getPokemon", (req, res, next) => {
     })
   })
 
+  app.get("/api/getPokemon/:id", (req, res, next) => {
+
+    // 'weaknesses resistances abilities moveset'
+    const deepPopulation = [
+      { path: 'moveset',
+        model: 'Moveset',
+        populate: {
+          path: 'attacks',
+          model: 'Attacks'
+        }
+      },
+      { path: 'weaknesses',
+        model: 'Weaknesses'
+      },
+      {
+        path: 'resistances',
+        model: 'Resistances'
+      },
+      {
+        path: 'abilities',
+        model: 'Abilities'
+      },
+      {
+        path: 'evolution',
+        model: 'Evolutions'
+      }
+    ]
+    var getPokemonQuery = Pokemon.findById(req.params.id).populate(deepPopulation);
+    getPokemonQuery.exec().then( (data) => {
+      res.status(200).json({
+        message: 'Retrieved Successfully',
+        pokemon: data
+      });
+    })
+  });
+
 });
