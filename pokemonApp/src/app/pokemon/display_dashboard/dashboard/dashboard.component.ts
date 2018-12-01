@@ -1,3 +1,4 @@
+import { Pokemon } from './../../../models/pokemon/pokemon.model';
 import { PokemonService } from './../../../services/pokemon.service';
 import { map } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -9,20 +10,23 @@ import { Subscription } from 'rxjs';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy{
+export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private pokemonService: PokemonService) { }
   private id;
+
+  pokemon: Pokemon;
 
   pokemonSub: Subscription;
   ngOnInit() {
     this.route.params.pipe(map(params => params['id'])).subscribe((id) => {
       this.id = id;
-      this.pokemonService.getAPokemon(this.id);
     });
 
+    this.pokemonService.getAPokemon(this.id);
+
     this.pokemonSub = this.pokemonService.getPokemonUpdatedListener().subscribe((p) => {
-      console.log(p);
+      this.pokemon = p;
     });
   }
 
@@ -30,6 +34,4 @@ export class DashboardComponent implements OnInit, OnDestroy{
     // if i don't unsubsribe, the number of items in the feed will increase (n+1)
     this.pokemonSub.unsubscribe();
   }
-
-
 }
