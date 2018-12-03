@@ -52,11 +52,15 @@ export class MovesetListComponent implements OnInit, OnDestroy {
       // and use it to query for the list of attacks belonging to that pokemon
       // this.pokemonService.queryForSelectedPokemon(this.pokemonToQueryFor);
 
-      if ( this.selectedPokemon.pokemonName === '') {
+      if ( this.selectedPokemon.pokemonName === '' || this.data.length === 0) {
         this.finishedLoading = true;
       } else {
         this.finishedLoading = false;
       }
+
+      this.data.splice(0);
+
+      this.data = [...this.data];
 
     });
 
@@ -82,9 +86,9 @@ export class MovesetListComponent implements OnInit, OnDestroy {
 
         this.attackService.addToAllSelectedAttacksFeed2(this.attacksFromMoveList);
         console.log('has attacks');
-        this.finishedLoading = true;
-      }
 
+      }
+      this.finishedLoading = true;
     });
 
     this.movesetExist = this.attackService.getMovesetExistFeedUpdateListener().subscribe((value) => {

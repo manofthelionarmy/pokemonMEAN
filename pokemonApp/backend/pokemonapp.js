@@ -252,7 +252,7 @@ app.get("/api/getPokemon", (req, res, next) => {
       },
       {
         path: 'evolution',
-        model: 'Evolutions'
+        model: 'Evolutions',
       }
     ]
     var getPokemonQuery = Pokemon.findById(req.params.id).populate(deepPopulation);

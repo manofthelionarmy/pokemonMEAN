@@ -1,25 +1,73 @@
 <mat-spinner *ngIf="!finishedLoading" [diameter]="200" [strokeWidth]="10" mode="indeterminate"></mat-spinner>
 <div *ngIf="pokemon && finishedLoading">
-  <p>
-    {{pokemon.pokemonName}}
-  </p>
-  <p>
-    {{pokemon.kdex}}
-  </p>
-  <p>
-    {{pokemon.types}}
-  </p>
-  <p>Resistances: </p>
-  <div *ngFor="let t of pokemon.resistances.resistances">
-    <p>{{t}}</p>
+
+
+
+
+  <div class="row">
+    <div class="col-md-4 col-sm-4">
+      <mat-card>
+        <mat-card-header>
+          <div mat-card-avatar style="background-image: url('https://img.pokemondb.net/sprites/silver/normal/bulbasaur.png'); background-size: cover">
+          </div>
+          <mat-card-title>{{pokemon.pokemonName}}</mat-card-title>
+          <mat-card-subtitle>Kdex: #{{pokemon.kdex}}</mat-card-subtitle>
+          <mat-card-subtitle>Type: {{pokemon.types}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="basic-pokemon-info">
+            <p> Evolution: <a href="">{{pokemon.evolution.pokemonName}}</a></p>
+            <p> Ability: {{pokemon.abilities.abilityName}}</p>
+            <p> Height: {{pokemon.height}}"</p>
+            <p> Weight: {{pokemon.weight}} lbs.</p>
+            <p> Description: {{pokemon.description}}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-6 col-sm-8">
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Reistances</mat-card-title>
+            </mat-card-header>
+            <div>
+              <p>Resistances: </p>
+              <div *ngFor="let t of pokemon.resistances.resistances">
+                <p>{{t}}</p>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <div class="col-md-6 col-sm-6">
+         <mat-card>
+           <mat-card-header>
+             <mat-card-title>Weaknesses</mat-card-title>
+           </mat-card-header>
+            <div>
+              <p>Weaknesses:</p>
+              <div *ngFor="let t of pokemon.weaknesses.weaknesses">
+                <p>{{t}}</p>
+              </div>
+            </div>
+         </mat-card>
+        </div>
+      </div>
+      <div class="row" style="margin-top: 2em;">
+        <div class="col-md-12 col-sm-12">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Moveset</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <ul>
+                <li *ngFor="let a of pokemon.moveset.attacks"> {{a.attackName}}</li>
+              </ul>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
   </div>
-  <p>Weaknesses</p>
-  <div *ngFor="let t of pokemon.weaknesses.weaknesses">
-    <p>{{t}}</p>
-  </div>
-  <p>{{pokemon.evolutions}}</p>
-  <p>{{pokemon.abilities.abilityName}}</p>
-  <p>{{pokemon.height}}</p>
-  <p>{{pokemon.weight}}</p>
-  <p>{{pokemon.description}}</p>
 </div>
