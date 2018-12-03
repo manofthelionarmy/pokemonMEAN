@@ -1,16 +1,20 @@
-<h1 style="text-align: center">Pokemon Database</h1>
-<div class="container-fluid">
-  <div class="jumbotron">
-    <table>
-      <tr *ngFor="let l of linkedList">
-        <td *ngFor="let n of l.pokemonNodeLists">
-          <a href="http://pokemondb.net/pokedex/bulbasaur"><img src="https://img.pokemondb.net/sprites/silver/normal/bulbasaur.png"
-              alt="Bulbasaur"></a>
-          <p style="font-size: 12px; color: darkgrey;">Kdex: #{{n.kdex}}</p>
-          <p style="font-size: 18px; color: skyblue"><a [routerLink]="['/display', n.id]">{{n.pokemonName}}</a></p>
-          <p class="item" [style.font-size]="'12px'" [style.color]="changeColor(n.types)"><b>{{n.types}}</b></p>
-        </td>
-      </tr>
-    </table>
+<mat-spinner *ngIf="!finishedLoading" [diameter]="200" [strokeWidth]="10" mode="indeterminate"></mat-spinner>
+<div *ngIf="finishedLoading">
+  <h1 style="text-align: center">Pokemon Database</h1>
+  <div class="container-fluid">
+    <div class="jumbotron">
+      <table>
+        <tr *ngFor="let l of linkedList">
+          <td *ngFor="let n of l.pokemonNodeLists">
+            <a href="http://pokemondb.net/pokedex/bulbasaur"><img src="https://img.pokemondb.net/sprites/silver/normal/bulbasaur.png"
+                alt="Bulbasaur"></a>
+            <p style="font-size: 12px; color: darkgrey;">Kdex: #{{n.kdex}}</p>
+            <p class="name" style="font-size: 18px; color: skyblue"><a [routerLink]="['/display', n.id]">{{n.pokemonName}}</a></p>
+            <p class="item" [style.font-size]="'12px'" [style.color]="changeColor(n.types)"><b>{{n.types}}</b></p>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
+

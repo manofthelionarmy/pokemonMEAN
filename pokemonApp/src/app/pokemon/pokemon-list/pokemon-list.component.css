@@ -28,8 +28,13 @@ p{
   margin-bottom: 0;
 }
 
+p.name, a {
+  width: 80px;
+}
+
 a {
   color: inherit;
+  width: 80%;
 }
 
 div.jumbotron {
@@ -38,9 +43,15 @@ div.jumbotron {
 }
 
 div.container-fluid {
-  background-color: #3f51b5;
+  background-color: #4e67f1c0;
   padding-top: 2em;
   padding-bottom: 2em;
   border-radius: 0.4em;
 }
 
+mat-spinner{
+  margin-top: 10em;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -1,9 +1,10 @@
 import { Pokemon } from './../../../models/pokemon/pokemon.model';
 import { PokemonService } from './../../../services/pokemon.service';
-import { map } from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   pokemon: Pokemon;
 
   pokemonSub: Subscription;
+  timeSub: Subscription;
+  finishedLoading = false;
   ngOnInit() {
+
+    this.finishedLoading = false;
     this.route.params.pipe(map(params => params['id'])).subscribe((id) => {
       this.id = id;
     });
@@ -27,11 +32,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.pokemonSub = this.pokemonService.getPokemonUpdatedListener().subscribe((p) => {
       this.pokemon = p;
+      console.log(this.pokemon);
+      /**This was used to help visualize the progress spinner */
+      /*this.timeSub = interval(3000).subscribe(() => {
+
+      });*/
+      this.finishedLoading = true;
+
     });
   }
 
   ngOnDestroy() {
     // if i don't unsubsribe, the number of items in the feed will increase (n+1)
     this.pokemonSub.unsubscribe();
+    // this.timeSub.unsubscribe();
   }
 }

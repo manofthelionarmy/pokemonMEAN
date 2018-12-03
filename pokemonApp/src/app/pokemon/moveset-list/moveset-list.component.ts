@@ -26,12 +26,18 @@ export class MovesetListComponent implements OnInit, OnDestroy {
 
   private clearSelectedAttacksListener: Subscription;
 
+  private movesetExist: Subscription;
+
   selectedPokemonName = '';
 
   selectedPokemon: {id: string, kdex: number, pokemonName: string};
 
+  finishedLoading = false;
+
   displayedColumns: string[] = ['attackNo', 'attackName', 'PP', 'accuracy', 'type', 'category', 'actions'];
   ngOnInit() {
+
+    this.finishedLoading = true;
     this.selectedPokemonName = '';
     this.selectedPokemonFeed = this.pokemonService.getSelectedPokemon().subscribe((selectedPokemon) => {
 
@@ -45,6 +51,13 @@ export class MovesetListComponent implements OnInit, OnDestroy {
       // this will get the latest pokemon in the 'select-pokemon-feed'
       // and use it to query for the list of attacks belonging to that pokemon
       // this.pokemonService.queryForSelectedPokemon(this.pokemonToQueryFor);
+
+      if ( this.selectedPokemon.pokemonName === '') {
+        this.finishedLoading = true;
+      } else {
+        this.finishedLoading = false;
+      }
+
     });
 
     // this.results = this.pokemonService.getAttackListsFromQuery().subscribe();
@@ -56,7 +69,6 @@ export class MovesetListComponent implements OnInit, OnDestroy {
       } else {
         this.data = this.data.concat(selectedAttack);
       }
-
       console.log(this.data);
 
     });
@@ -69,6 +81,17 @@ export class MovesetListComponent implements OnInit, OnDestroy {
         this.data = this.attacksFromMoveList;
 
         this.attackService.addToAllSelectedAttacksFeed2(this.attacksFromMoveList);
+        console.log('has attacks');
+        this.finishedLoading = true;
+      }
+
+    });
+
+    this.movesetExist = this.attackService.getMovesetExistFeedUpdateListener().subscribe((value) => {
+      if (!value ) {
+        this.finishedLoading = true;
+        this.data.splice(0);
+        this.data = [...this.data];
       }
     });
 
@@ -105,5 +128,6 @@ export class MovesetListComponent implements OnInit, OnDestroy {
     this.selectedAttacksFeed.unsubscribe();
     this.movesetFeed.unsubscribe();
     this.clearSelectedAttacksListener.unsubscribe();
+    this.movesetExist.unsubscribe();
   }
 }

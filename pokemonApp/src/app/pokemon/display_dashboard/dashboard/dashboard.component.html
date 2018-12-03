@@ -1,7 +1,5 @@
-<p>
-  dashboard works!
-</p>
-<div *ngIf="pokemon">
+<mat-spinner *ngIf="!finishedLoading" [diameter]="200" [strokeWidth]="10" mode="indeterminate"></mat-spinner>
+<div *ngIf="pokemon && finishedLoading">
   <p>
     {{pokemon.pokemonName}}
   </p>

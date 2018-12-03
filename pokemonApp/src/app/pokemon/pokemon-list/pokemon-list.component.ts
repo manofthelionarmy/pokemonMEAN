@@ -20,7 +20,8 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     grass: '#0b7c38',
     fire: 'orange',
     water: 'blue',
-    electric: 'gold'
+    electric: 'gold',
+    flying: 'skyblue'
   };
   pokemonList: {id: string, kdex: number, pokemonName: string, types: string}[] = [];
 
@@ -38,7 +39,11 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   linkedList: {pokemonNodeLists: {id: string, kdex: number, pokemonName: string, types: string}[]} [] = [];
 
+  finishedLoading = false;
+
   ngOnInit() {
+
+    this.finishedLoading = false;
     this.pokemonService.getPokemon();
     this.pokeListSubs = this.pokemonService.getPokemonGetListUpdatedListener().subscribe((pokeArr) => {
       console.log(pokeArr);
@@ -75,7 +80,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
             this.linkedList[row].pokemonNodeLists.push(pItem);
             this.linkedList[row].pokemonNodeLists = [...this.linkedList[row].pokemonNodeLists];
           }
-
+          this.finishedLoading = true;
         }
       }
 
