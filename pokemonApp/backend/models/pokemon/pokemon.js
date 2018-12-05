@@ -11,7 +11,8 @@ const pokemonSchema = mongoose.Schema({
   evolution: {type: mongoose.Schema.Types.ObjectId, ref: 'Evolutions'},
   weaknesses: {type: mongoose.Schema.Types.ObjectId, ref: 'Weaknesses'},
   resistances: {type: mongoose.Schema.Types.ObjectId, ref: 'Resistances'},
-  abilities: {type: mongoose.Schema.Types.ObjectId, ref: 'Abilities'}
+  abilities: {type: mongoose.Schema.Types.ObjectId, ref: 'Abilities'},
+  stats: {type: mongoose.Schema.Types.ObjectId, ref: 'Stats'}
 });
 
 module.exports = mongoose.model('Pokemon', pokemonSchema);

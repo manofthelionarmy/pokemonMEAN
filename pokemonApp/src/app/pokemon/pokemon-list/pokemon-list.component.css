@@ -53,7 +53,7 @@ p.item {
   vertical-align: top;
   margin-left: auto;
   margin-right: auto;
-  padding: 0.2em;
+  padding: 0.1em;
 }
 
 .typesContainer {
@@ -61,4 +61,8 @@ p.item {
   display: flex;
   align-items: center;
   margin: auto;
+}
+
+.pokemon {
+  margin-bottom: 2em;
 }

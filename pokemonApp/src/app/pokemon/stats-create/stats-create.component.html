@@ -1,0 +1,51 @@
+<form (submit)="onAddStatsForm(statsForm)" #statsForm="ngForm">
+  <mat-form-field>
+    <mat-select placeholder="Select a Pokemon" (selectionChange)="updateSelectedPokemon($event.value)">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let p of pokemonOptions" [value]="p">
+        {{p.pokemonName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div *ngIf="selectedPokemon != undefined">
+    <mat-form-field>
+      <input matInput type="number" name="hp" ngModel placeholder="Enter HP" required #hp="ngModel">
+      <mat-error *ngIf="hp.invalid">
+        Please enter HP
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" name="attack" ngModel placeholder="Enter Attack" required #attack="ngModel">
+      <mat-error *ngIf="attack.invalid">
+        Please enter Attack
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" name="defense" ngModel placeholder="Enter Defense" required #defense="ngModel">
+      <mat-error *ngIf="defense.invalid">
+        Please enter Defense
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" name="special_attack" ngModel placeholder="Enter Special Attack" required #special_attack="ngModel">
+      <mat-error *ngIf="special_attack.invalid">
+        Please enter Special Attack
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" name="special_defense" ngModel placeholder="Enter Special Defense" required #special_defense="ngModel">
+      <mat-error *ngIf="special_defense.invalid">
+        Please enter Special Defense
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="number" name="speed" ngModel placeholder="Enter Speed" required
+        #speed="ngModel">
+      <mat-error *ngIf="speed.invalid">
+        Please enter Speed
+      </mat-error>
+    </mat-form-field>
+    <hr>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </div>
+</form>

@@ -18,6 +18,7 @@ import { RoutingModule } from './routing/routing.module';
 import { AttackCreateComponent } from './pokemon/attack-create/attack-create.component';
 import { AttackListComponent } from './pokemon/attack-list/attack-list.component';
 import { DashboardComponent } from './pokemon/display_dashboard/dashboard/dashboard.component';
+import { StatsCreateComponent } from './pokemon/stats-create/stats-create.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DashboardComponent } from './pokemon/display_dashboard/dashboard/dashbo
     MovesetListComponent,
     AttackCreateComponent,
     AttackListComponent,
-    DashboardComponent
+    DashboardComponent,
+    StatsCreateComponent
   ],
   imports: [
     BrowserModule,

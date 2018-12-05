@@ -90,6 +90,7 @@ export class PokemonCreateComponent implements OnInit {
       weaknesses: weakness,
       abilities: ability,
       moveset: null,
+      stats: null,
       height: form.value.height,
       weight: form.value.weight,
       description: form.value.description

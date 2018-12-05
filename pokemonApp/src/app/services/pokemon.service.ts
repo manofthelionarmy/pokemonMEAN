@@ -18,7 +18,7 @@ export class PokemonService {
 
   private pokemonOptions: {id: string, kdex: number, pokemonName: string} [];
 
-  private pokemonUpdatedOptions = new Subject<{kdex: number, pokemonName: string}[]>();
+  private pokemonUpdatedOptions = new Subject<{id: string, kdex: number, pokemonName: string}[]>();
 
 
   private retrievedPokemon: Pokemon;
@@ -60,7 +60,10 @@ export class PokemonService {
                       });
                     }))
                     .subscribe( (transformedPokemon) => {
+
                       this.pokemonOptions = transformedPokemon;
+
+                      // console.log(this.pokemonOptions);
                       this.pokemonUpdatedOptions.next([...this.pokemonOptions]);
                     });
   }

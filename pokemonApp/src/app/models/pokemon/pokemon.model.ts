@@ -1,3 +1,4 @@
+import { Stats } from './stats.model';
 import { Moveset } from './movset.model';
 import { Abilities } from './abilities.model';
 import { Evolutions } from './evolutions.model';
@@ -13,6 +14,7 @@ export interface Pokemon {
   weaknesses: Weaknesses;
   abilities: Abilities;
   moveset: Moveset;
+  stats: Stats;
   description: string;
   height: number;
   weight: number;

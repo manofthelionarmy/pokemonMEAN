@@ -13,3 +13,7 @@ mat-spinner{
 .weaknesses, .resistances {
   margin-top: 5em;
 }
+
+table {
+  width: 100%;
+}

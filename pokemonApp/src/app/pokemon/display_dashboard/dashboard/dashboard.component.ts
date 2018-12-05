@@ -1,27 +1,41 @@
 import { Pokemon } from './../../../models/pokemon/pokemon.model';
 import { PokemonService } from './../../../services/pokemon.service';
 import { map} from 'rxjs/operators';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {interval} from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import {Chart} from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  constructor(private route: ActivatedRoute, private pokemonService: PokemonService, private sanitizer: DomSanitizer) { }
+
   private id;
+
+  chart = [];
+
+  data: any[] = [];
+
+  displayedColumns: string[] = ['attackNo', 'attackName', 'PP', 'accuracy', 'type', 'category'];
 
   pokemon: Pokemon;
 
   pokemonSub: Subscription;
   timeSub: Subscription;
   finishedLoading = false;
+
+  @ViewChild('chart') chartRef;
+
+  context: any;
+
+  constructor(private route: ActivatedRoute, private pokemonService: PokemonService, private sanitizer: DomSanitizer) { }
+
   ngOnInit() {
 
     this.finishedLoading = false;
@@ -34,19 +48,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.pokemonSub = this.pokemonService.getPokemonUpdatedListener().subscribe((p) => {
       this.pokemon = p;
       console.log(this.pokemon);
+
+      // this.data = this.pokemon
       /**This was used to help visualize the progress spinner */
       /*this.timeSub = interval(3000).subscribe(() => {
 
       });*/
       this.finishedLoading = true;
 
+
     });
+
   }
 
   ngOnDestroy() {
     // if i don't unsubsribe, the number of items in the feed will increase (n+1)
     this.pokemonSub.unsubscribe();
     // this.timeSub.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+
   }
 
   // little hack for now. will implement sprite upload soon but this'll be a good format to have.
