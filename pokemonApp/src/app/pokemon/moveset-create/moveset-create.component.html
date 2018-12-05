@@ -21,7 +21,7 @@
             <mat-form-field>
               <mat-select placeholder="Select Attack" name="selectedAttack" [formControl]="attackControl" required
                 disableOptionCentering="false" (selectionChange)="onselectAttack($event.value)">
-                <mat-option>--</mat-option>
+                <mat-option [value]="'none'">--</mat-option>
                 <mat-option *ngFor="let a of selectAttackOptions" [value]="a">
                   {{a.attackName}}
                 </mat-option>

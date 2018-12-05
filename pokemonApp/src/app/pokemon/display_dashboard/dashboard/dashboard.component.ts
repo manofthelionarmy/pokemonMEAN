@@ -5,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {interval} from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,7 @@ import {interval} from 'rxjs';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  constructor(private route: ActivatedRoute, private pokemonService: PokemonService) { }
+  constructor(private route: ActivatedRoute, private pokemonService: PokemonService, private sanitizer: DomSanitizer) { }
   private id;
 
   pokemon: Pokemon;
@@ -46,5 +47,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // if i don't unsubsribe, the number of items in the feed will increase (n+1)
     this.pokemonSub.unsubscribe();
     // this.timeSub.unsubscribe();
+  }
+
+  // little hack for now. will implement sprite upload soon but this'll be a good format to have.
+  updateBackground() {
+    const p = this.pokemon.pokemonName.toLowerCase();
+    const imageUrl = `https://img.pokemondb.net/sprites/silver/normal/${p}.png`;
+
+    return this.sanitizer.bypassSecurityTrustStyle('background-image: url(' + imageUrl + '); background-size: cover');
   }
 }

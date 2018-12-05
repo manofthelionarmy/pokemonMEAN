@@ -17,7 +17,36 @@ export class PokemonCreateComponent implements OnInit {
 
   constructor(private pokemonService: PokemonService, private snackbar: MatSnackBar) { }
 
+  types_OptionsArray: string[] = [];
+
+  selectedResistances: string[] = [];
+
+  selectedWeaknesses: string[] = [];
+
+  selectedTypes: string[] = [];
+
+  maxTypesCount = 2;
+
+  selectedTypesCount = 0;
+
   ngOnInit() {
+    this.types_OptionsArray = [
+      'Fire',
+      'Water',
+      'Grass',
+      'Bug',
+      'Dragon',
+      'Ice',
+      'Fighting',
+      'Flying',
+      'Ghost',
+      'Ground',
+      'Normal',
+      'Poison',
+      'Psychic',
+      'Rock',
+      'Electric'
+    ];
   }
 
   onAddPokemon(form: NgForm) {
@@ -29,7 +58,7 @@ export class PokemonCreateComponent implements OnInit {
       id: null,
       kdex: form.value.kdex,
       pokemonName: form.value.name,
-      resistances: [form.value.resistance]
+      resistances: this.selectedResistances
     };
 
     const evolutions: Evolutions = {
@@ -42,7 +71,7 @@ export class PokemonCreateComponent implements OnInit {
       id: null,
       kdex: form.value.kdex,
       pokemonName: form.value.name,
-      weaknesses: [form.value.weakness]
+      weaknesses: this.selectedWeaknesses
     };
 
     const ability: Abilities = {
@@ -55,11 +84,12 @@ export class PokemonCreateComponent implements OnInit {
       id: null,
       pokemonName: form.value.name,
       kdex: form.value.kdex,
-      types: [form.value.types],
+      types: this.selectedTypes,
       resistances: resistance,
-      evolutions: evolutions,
+      evolution: evolutions,
       weaknesses: weakness,
       abilities: ability,
+      moveset: null,
       height: form.value.height,
       weight: form.value.weight,
       description: form.value.description
@@ -73,4 +103,38 @@ export class PokemonCreateComponent implements OnInit {
     });
   }
 
-}
+  updateSelectedWeaknesses(value: any[]) {
+
+
+    this.selectedWeaknesses = [...value];
+
+    /*const index = this.types_OptionsArray.findIndex((t) => t.typeName === value);
+    this.types_OptionsArray[index].selected = true;*/
+    console.log(this.selectedWeaknesses);
+  }
+
+  updateSelectedResistances(value: any[]) {
+
+    this.selectedResistances = [...value];
+
+    /*const index = this.types_OptionsArray.findIndex((t) => t.typeName === value);
+    this.types_OptionsArray[index].selected = true;*/
+    console.log(this.selectedResistances);
+  }
+
+  updateSelectedTypes(value: any[]) {
+
+    this.selectedTypesCount = value.length;
+
+    if (this.selectedTypesCount > this.maxTypesCount) {
+      alert('You can only select at most 2 types');
+    } else {
+      this.selectedTypes = [...value];
+    }
+
+
+    console.log(this.selectedTypes);
+
+  }
+
+ }

@@ -1,3 +1,4 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Pokemon } from './../../models/pokemon/pokemon.model';
 import { map } from 'rxjs/operators';
 import { PokemonService } from './../../services/pokemon.service';
@@ -12,7 +13,7 @@ import { type } from 'os';
 })
 export class PokemonListComponent implements OnInit, OnDestroy {
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private pokemonService: PokemonService, private sanitizer: DomSanitizer) { }
 
   private pokeListSubs: Subscription;
 
@@ -21,7 +22,8 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     fire: 'orange',
     water: 'blue',
     electric: 'gold',
-    flying: 'skyblue'
+    flying: 'skyblue',
+    ground: 'brown'
   };
   pokemonList: {id: string, kdex: number, pokemonName: string, types: string}[] = [];
 
@@ -61,7 +63,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
         };
 
         /**If we have reached the 8th pokemon, create a new row*/
-        if ( (i)  % 8 === 0 && i !== 0) {
+        if ( (i)  % 6 === 0 && i !== 0) {
           const l = {
             pokemonNodeLists: [pItem]
           };
@@ -109,7 +111,16 @@ export class PokemonListComponent implements OnInit, OnDestroy {
       console.log('here');
       return `#0b7c38`;
     }*/
-    return this.Colors[types[0].toLowerCase()];
+    console.log(types);
+    return this.Colors[types.toLowerCase()];
+  }
+
+  // litte hack for now: will implement uploading of sprites soon
+  getImage(n) {
+    const p = n.toLowerCase();
+    const imageUrl = `https://img.pokemondb.net/sprites/silver/normal/${p}.png`;
+
+    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 
 }

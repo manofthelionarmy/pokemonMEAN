@@ -3,12 +3,16 @@ h1 {
   margin-bottom: 0.5em;
 }
 ul {
+  width: 70%;
+  margin: auto;
   list-style-type: none;
 }
 li{
   display: inline-block;
   margin-left: 0.2em;
   margin-right: 0.2em;
+  text-align: center;
+  font-size: 12px;
 }
 
 table {
@@ -28,13 +32,8 @@ p{
   margin-bottom: 0;
 }
 
-p.name, a {
-  width: 80px;
-}
-
 a {
   color: inherit;
-  width: 80%;
 }
 
 div.jumbotron {
@@ -42,16 +41,24 @@ div.jumbotron {
   height: 90%;
 }
 
-div.container-fluid {
-  background-color: #4e67f1c0;
-  padding-top: 2em;
-  padding-bottom: 2em;
-  border-radius: 0.4em;
-}
-
 mat-spinner{
   margin-top: 10em;
   margin-bottom: auto;
   margin-left: auto;
   margin-right: auto;
+}
+
+p.item {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.2em;
+}
+
+.typesContainer {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  margin: auto;
 }

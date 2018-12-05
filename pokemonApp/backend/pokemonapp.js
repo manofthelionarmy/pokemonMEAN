@@ -49,8 +49,8 @@ app.post("/api/addPokemon", (req, res, next) => {
   });
 
   const evolution = new Evolutions({
-    evolutionId: req.body.evolutions.kdex,
-    pokemonName: req.body.evolutions.pokemonName
+    evolutionId: req.body.evolution.kdex,
+    pokemonName: req.body.evolution.pokemonName
   });
 
   const resistance = new Resistances({
