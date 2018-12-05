@@ -119,12 +119,15 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
       if (attack === undefined) {
         console.log('Cannot select undefined');
       } else {
-        console.log(attack.id);
-        // instead, add a single attack to the feed
-        /**Send the selected attack to the moveset-list component */
-        this.attackService.addToSelectedAttackFeed(attack);
-        /**And add the list to the total selected attacks */
-        this.attackService.addToAllSelectedAttacksFeed(attack);
+        // console.log(attack.id);
+        console.log(attack);
+        if (attack !== 'none') {
+          // instead, add a single attack to the feed
+          /**Send the selected attack to the moveset-list component */
+          this.attackService.addToSelectedAttackFeed(attack);
+          /**And add the list to the total selected attacks */
+          this.attackService.addToAllSelectedAttacksFeed(attack);
+        }
       }
     } catch (err) {
 
@@ -132,7 +135,8 @@ export class MovesetCreateComponent implements OnInit, OnDestroy {
   }
 
   addMoveset(form: NgForm) {
-    if (form.invalid && this.selectedAttacks.length === 0) {
+    console.log('Here: ' + this.selectedAttacks.length);
+    if (form.invalid && this.selectedAttacks.length !== 0) {
       return;
     }
 

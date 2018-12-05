@@ -15,8 +15,13 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="text" name="types" ngModel placeholder="Enter its type" required #types="ngModel">
-        <mat-error *ngIf="types.invalid">
+       <mat-select placeholder="Select a Type" (selectionChange)="updateSelectedTypes($event.value)" multiple #types>
+         <mat-option>--</mat-option>
+         <mat-option *ngFor="let t of types_OptionsArray" [value]="t" #type [disabled]="selectedTypesCount >= maxTypesCount && !type.selected">
+          {{t}}
+         </mat-option>
+       </mat-select>
+        <mat-error *ngIf="">
           Please enter its type
         </mat-error>
       </mat-form-field>
@@ -28,29 +33,25 @@
       </mat-form-field>
       <mat-form-field>
 
-        <div class="input-group">
-          <input matInput type="text" class="form-control" name="resistance" ngModel placeholder="Enter a resistance" required #resistance="ngModel" aria-describedby="add_button">
-          <div class="input-group-append">
-            <button mat-icon-button type="button" id="add_button" class="butn btn-outline-secondary">
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
-        </div>
+        <mat-select placeholder="Select a Resistance" (selectionChange)="updateSelectedResistances($event.value)" multiple>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let t of types_OptionsArray" [value] = "t">
+            {{t}}
+          </mat-option>
+        </mat-select>
 
-        <mat-error *ngIf="resistance.invalid">
+        <mat-error *ngIf="">
           Please enter a reistance
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <div class="input-group">
-          <input matInput type="text" class="form-control" name="weakness" ngModel placeholder="Enter a weakness" required #weakness="ngModel">
-          <div class="input-group-append">
-            <button mat-icon-button type="button" id="add_button" class="butn btn-outline-secondary">
-              <mat-icon>add</mat-icon>
-            </button>
-          </div>
-        </div>
-        <mat-error *ngIf="weakness.invalid">
+        <mat-select placeholder="Select a Weakness" (selectionChange)="updateSelectedWeaknesses($event.value)" multiple>
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let t of types_OptionsArray" [value]="t">
+           {{t}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="">
           Enter a weakness
         </mat-error>
       </mat-form-field>

@@ -1,11 +1,12 @@
 <mat-toolbar color="primary">
   <img src="assets/resources/pokeball.svg">
-  <span>Pokemon App</span>
+  <span>Pokemon DB</span>
   <span id="spacer"></span>
   <mat-menu #appMenu="matMenu">
     <a routerLink=""><button mat-menu-item> Create Pokemon</button></a>
     <a routerLink="attack"><button mat-menu-item>Add Attacks</button></a>
     <a routerLink="moveset"><button mat-menu-item >Add Movesets</button></a>
+    <a routerLink="addStats"><button mat-menu-item>Add Stats</button></a>
     <a routerLink="list"><button mat-menu-item>Pokemon DB</button></a>
   </mat-menu>
   <button mat-icon-button [matMenuTriggerFor]="appMenu">

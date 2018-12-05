@@ -18,7 +18,11 @@ export class PokemonService {
 
   private pokemonOptions: {id: string, kdex: number, pokemonName: string} [];
 
-  private pokemonUpdatedOptions = new Subject<{kdex: number, pokemonName: string}[]>();
+  private pokemonUpdatedOptions = new Subject<{id: string, kdex: number, pokemonName: string}[]>();
+
+
+  private retrievedPokemon: Pokemon;
+  private pokemonUpdated = new Subject<Pokemon>();
 
   private pokemonList: Pokemon[] = [];
   private pokemonUpdatedList = new Subject<Pokemon[]>();
@@ -56,7 +60,10 @@ export class PokemonService {
                       });
                     }))
                     .subscribe( (transformedPokemon) => {
+
                       this.pokemonOptions = transformedPokemon;
+
+                      // console.log(this.pokemonOptions);
                       this.pokemonUpdatedOptions.next([...this.pokemonOptions]);
                     });
   }
@@ -86,6 +93,15 @@ export class PokemonService {
 
   }
 
+  getAPokemon(id: string) {
+    const url = `http://localhost:3000/api/getPokemon/${id}`;
+
+    return this.http.get<{message: string, pokemon: Pokemon}>(url).subscribe((resposeData) => {
+      this.retrievedPokemon = resposeData.pokemon;
+      this.pokemonUpdated.next(this.retrievedPokemon);
+    });
+  }
+
   getPokemonOptionsUpdateListener() {
     return this.pokemonUpdatedOptions.asObservable();
   }
@@ -103,6 +119,10 @@ export class PokemonService {
   // Used for pokemon-list and will be able to access desired data
   getPokemonGetListUpdatedListener() {
     return this.pokemonGetListUpdated.asObservable();
+  }
+
+  getPokemonUpdatedListener() {
+    return this.pokemonUpdated.asObservable();
   }
 
 }

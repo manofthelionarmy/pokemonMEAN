@@ -1,8 +1,8 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-xs-12">
-      <div class="jumbotron">
-        <h1 style="text-align: left">Create Moveset</h1>
+      <div>
+        <h1 style="text-align: left">Create/Edit Moveset</h1>
         <!--Some reason, the editor says this is wrong, but it is working-->
         <form (submit)="addMoveset(movesetForm)" #movesetForm="ngForm" [formGroup]="movesetFormGroup">
           <mat-card id="first">
@@ -21,7 +21,7 @@
             <mat-form-field>
               <mat-select placeholder="Select Attack" name="selectedAttack" [formControl]="attackControl" required
                 disableOptionCentering="false" (selectionChange)="onselectAttack($event.value)">
-                <mat-option>--</mat-option>
+                <mat-option [value]="'none'">--</mat-option>
                 <mat-option *ngFor="let a of selectAttackOptions" [value]="a">
                   {{a.attackName}}
                 </mat-option>

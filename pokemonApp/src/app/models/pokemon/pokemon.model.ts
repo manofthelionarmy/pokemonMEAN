@@ -1,3 +1,5 @@
+import { Stats } from './stats.model';
+import { Moveset } from './movset.model';
 import { Abilities } from './abilities.model';
 import { Evolutions } from './evolutions.model';
 import { Weaknesses } from './weaknesses.model';
@@ -7,10 +9,12 @@ export interface Pokemon {
   pokemonName: string;
   kdex: number;
   types: string[];
-  evolutions: Evolutions;
+  evolution: Evolutions;
   resistances: Resistances;
   weaknesses: Weaknesses;
   abilities: Abilities;
+  moveset: Moveset;
+  stats: Stats;
   description: string;
   height: number;
   weight: number;

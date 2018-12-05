@@ -1,0 +1,116 @@
+<mat-spinner *ngIf="!finishedLoading" [diameter]="200" [strokeWidth]="10" mode="indeterminate"></mat-spinner>
+<div *ngIf="pokemon && finishedLoading">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar [style]="updateBackground()">
+            </div>
+            <mat-card-title>{{pokemon.pokemonName}}</mat-card-title>
+            <mat-card-subtitle>Kdex: #{{pokemon.kdex}}</mat-card-subtitle>
+            <mat-card-subtitle>Type: {{pokemon.types}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="basic-pokemon-info">
+              <p> Evolution: <a href="">{{pokemon.evolution.pokemonName}}</a></p>
+              <p> Ability: {{pokemon.abilities.abilityName}}</p>
+              <p> Height: {{pokemon.height}}"</p>
+              <p> Weight: {{pokemon.weight}} lbs.</p>
+              <p> Description: {{pokemon.description}}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <div class="col-md-6 col-sm-8">
+        <div class="row">
+          <div class="col-md-6 col-sm-6">
+            <mat-accordion>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <h5>Reistances</h5>
+                </mat-expansion-panel-header>
+                <div>
+                  <div *ngFor="let t of pokemon.resistances.resistances">
+                    <p>{{t}}</p>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <h5>Weaknesses</h5>
+              </mat-expansion-panel-header>
+              <div>
+                <div *ngFor="let t of pokemon.weaknesses.weaknesses">
+                  <p>{{t}}</p>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 2em;">
+          <div class="col-md-12 col-sm-12">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Moveset</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <table mat-table *ngIf="pokemon.moveset != undefined" [dataSource]="pokemon.moveset.attacks" class="mat-elevation-z8">
+                  <ng-container matColumnDef="attackNo">
+                    <th mat-header-cell *matHeaderCellDef>Attack No.</th>
+                    <td mat-cell *matCellDef="let element">{{element.attackNumber}}</td>
+                    <td mat-cell><button>Remove</button></td>
+                  </ng-container>
+                  <ng-container matColumnDef="attackName">
+                    <th mat-header-cell *matHeaderCellDef>Attack Name</th>
+                    <td mat-cell *matCellDef="let element">{{element.attackName}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="PP">
+                    <th mat-header-cell *matHeaderCellDef>Power Points</th>
+                    <td mat-cell *matCellDef="let element">{{element.PP}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="power">
+                    <th mat-header-cell *matHeaderCellDef>Power</th>
+                    <td mat-cell *matCellDef="let element">{{element.power}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="accuracy">
+                    <th mat-header-cell *matHeaderCellDef>Accuracy</th>
+                    <td mat-cell *matCellDef="let element">{{element.accuracy}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                    <td mat-cell *matCellDef="let element">{{element.type}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef>Category</th>
+                    <td mat-cell *matCellDef="let element">{{element.category}}</td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <mat-card>
+          <mat-card-title>Stats</mat-card-title>
+          <mat-card-content>
+            <div *ngIf="pokemon.stats != undefined">
+              <p><b>HP:</b> {{pokemon.stats.hp}}</p>
+              <p><b>Attack:</b> {{pokemon.stats.attack}}</p>
+              <p><b>Defense:</b> {{pokemon.stats.defense}}</p>
+              <p><b>Special Attack:</b> {{pokemon.stats.special_attack}}</p>
+              <p><b>Special Defense:</b> {{pokemon.stats.special_defense}}</p>
+              <p><b>Speed</b> {{pokemon.stats.speed}}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

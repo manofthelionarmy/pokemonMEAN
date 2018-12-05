@@ -6,12 +6,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import {RouterModule, Routes} from '@angular/router';
+import { DashboardComponent } from '../pokemon/display_dashboard/dashboard/dashboard.component';
+import { StatsCreateComponent } from '../pokemon/stats-create/stats-create.component';
 
 const routes: Routes = [
   {path: '', component: PokemonCreateComponent},
   {path: 'list', component: PokemonListComponent},
   {path: 'moveset', component: MovesetCreateComponent},
-  {path: 'attack', component: AttackCreateComponent}
+  {path: 'attack', component: AttackCreateComponent},
+  {path: 'display/:id', component: DashboardComponent},
+  {path: 'addStats', component: StatsCreateComponent}
 ];
 
 @NgModule({

@@ -1,8 +1,10 @@
+import { DomSanitizer } from '@angular/platform-browser';
 import { Pokemon } from './../../models/pokemon/pokemon.model';
 import { map } from 'rxjs/operators';
 import { PokemonService } from './../../services/pokemon.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { type } from 'os';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -11,10 +13,18 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class PokemonListComponent implements OnInit, OnDestroy {
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(private pokemonService: PokemonService, private sanitizer: DomSanitizer) { }
 
   private pokeListSubs: Subscription;
 
+  private Colors = {
+    grass: '#0b7c38',
+    fire: 'orange',
+    water: 'blue',
+    electric: 'gold',
+    flying: 'skyblue',
+    ground: 'brown'
+  };
   pokemonList: {id: string, kdex: number, pokemonName: string, types: string}[] = [];
 
   /**
@@ -29,20 +39,88 @@ export class PokemonListComponent implements OnInit, OnDestroy {
    * End of organized table
    */
 
+  linkedList: {pokemonNodeLists: {id: string, kdex: number, pokemonName: string, types: string}[]} [] = [];
+
+  finishedLoading = false;
+
   ngOnInit() {
+
+    this.finishedLoading = false;
     this.pokemonService.getPokemon();
     this.pokeListSubs = this.pokemonService.getPokemonGetListUpdatedListener().subscribe((pokeArr) => {
       console.log(pokeArr);
       this.pokemonList = pokeArr;
+
+      let row = 0;
+      for (let i = 0; i < this.pokemonList.length; i = i + 1) {
+
+
+        const pItem = {
+          id: this.pokemonList[i].id,
+          kdex: this.pokemonList[i].kdex,
+          pokemonName: this.pokemonList[i].pokemonName,
+          types: this.pokemonList[i].types
+        };
+
+        /**If we have reached the 8th pokemon, create a new row*/
+        if ( (i)  % 6 === 0 && i !== 0) {
+          const l = {
+            pokemonNodeLists: [pItem]
+          };
+          this.linkedList.push(l);
+          row = row + 1;
+        } else {
+          /**Otherwise, if the linkedList is empty initalize it. If it is not empty, keep adding
+           * <td>'s to the current HTML <tr> in the HTML <table>
+           */
+          if ( this.linkedList.length === 0 ) {
+            const l =  {
+              pokemonNodeLists: [pItem]
+            };
+            this.linkedList.push(l);
+          } else {
+            this.linkedList[row].pokemonNodeLists.push(pItem);
+            this.linkedList[row].pokemonNodeLists = [...this.linkedList[row].pokemonNodeLists];
+          }
+          this.finishedLoading = true;
+        }
+      }
+
+      this.linkedList = [...this.linkedList];
+
+      console.log(this.linkedList);
+      // console.log(this.linkedList[1].pokemonNodeLists);
     });
 
     /**
-     * part of the taable
+     * part of the table
      */
+    const p = document.getElementsByClassName('item');
+
+    console.log(p);
+
   }
 
   ngOnDestroy() {
     this.pokeListSubs.unsubscribe();
+  }
+
+  changeColor(types: string): string {
+
+    /*if ( types[0].toLowerCase() === 'grass') {
+      console.log('here');
+      return `#0b7c38`;
+    }*/
+    console.log(types);
+    return this.Colors[types.toLowerCase()];
+  }
+
+  // litte hack for now: will implement uploading of sprites soon
+  getImage(n) {
+    const p = n.toLowerCase();
+    const imageUrl = `https://img.pokemondb.net/sprites/silver/normal/${p}.png`;
+
+    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 
 }

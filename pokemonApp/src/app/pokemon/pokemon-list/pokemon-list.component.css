@@ -1,0 +1,68 @@
+h1 {
+  margin-top: 0.8em;
+  margin-bottom: 0.5em;
+}
+ul {
+  width: 70%;
+  margin: auto;
+  list-style-type: none;
+}
+li{
+  display: inline-block;
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+  text-align: center;
+  font-size: 12px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 2.5em 0.5em;
+}
+
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p{
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+a {
+  color: inherit;
+}
+
+div.jumbotron {
+  background-color: white;
+  height: 90%;
+}
+
+mat-spinner{
+  margin-top: 10em;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+p.item {
+  display: inline-block;
+  vertical-align: top;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.1em;
+}
+
+.typesContainer {
+  width: 80px;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.pokemon {
+  margin-bottom: 2em;
+}

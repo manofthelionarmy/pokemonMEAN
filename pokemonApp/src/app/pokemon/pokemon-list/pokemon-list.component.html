@@ -1,3 +1,23 @@
-<ul>
-  <li *ngFor="let poke of pokemonList">{{poke.kdex}} {{poke.pokemonName}} {{poke.types}}</li>
-</ul>
+<mat-spinner *ngIf="!finishedLoading" [diameter]="200" [strokeWidth]="10" mode="indeterminate"></mat-spinner>
+<div *ngIf="finishedLoading">
+  <h1 style="text-align: center">Pokemon Database</h1>
+  <div class="container-fluid">
+    <div>
+      <mat-card>
+        <div class="row">
+          <div class="col-lg-2 col-md-2 col-sm-2 pokemon" *ngFor="let n of pokemonList">
+            <a href="http://pokemondb.net/pokedex/bulbasaur"><img [src]="getImage(n.pokemonName)" alt="Bulbasaur"></a>
+            <p style="font-size: 12px; color: darkgrey;">Kdex: #{{n.kdex}}</p>
+            <p class="name" style="font-size: 18px; color: skyblue"><a [routerLink]="['/display', n.id]">{{n.pokemonName}}</a></p>
+            <div class="typesContainer">
+              <p class="item" [style.font-size]="'12px'" *ngFor="let t of n.types" [style.color]="changeColor(t)" >
+                <b>{{t}}</b>
+              </p>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
