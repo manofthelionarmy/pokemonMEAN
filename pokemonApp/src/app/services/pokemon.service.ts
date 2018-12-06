@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Attacks } from './../models/pokemon/attacks.model';
 import { map } from 'rxjs/operators';
 import { Evolutions } from './../models/pokemon/evolutions.model';
@@ -8,6 +9,7 @@ import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Pokemon } from './../models/pokemon/pokemon.model';
 import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +37,7 @@ export class PokemonService {
   private selectedPokemonFeed = new Subject<{id: string, kdex: number, pokemonName: string}>();
 
   addPokemon(p: Pokemon) {
-    const url = 'http://localhost:3000/api/addPokemon';
+    const url = environment.apiUrl + '/addPokemon';
 
     this.http.post<{message: string, pokemonId: string}>(url, p)
              .subscribe( (responseData) => {
@@ -47,7 +49,7 @@ export class PokemonService {
   }
 
   getPokemonOptions() {
-    const url = 'http://localhost:3000/api/getPokemonOptions';
+    const url = environment.apiUrl + '/getPokemonOptions';
 
     return this.http.get<{messages: string, pokemon: any[]}>(url)
                     .pipe(map((pokemonData) => {
@@ -70,7 +72,7 @@ export class PokemonService {
 
   // for pokemon-list Won't work for some reason
   getPokemon() {
-    const url = 'http://localhost:3000/api/getPokemon';
+    const url = environment.apiUrl + '/getPokemon';
 
     return this.http.get<{messages: string, pokemon: any[]}>(url)
                     .pipe( map( (responseData) => {
@@ -94,7 +96,7 @@ export class PokemonService {
   }
 
   getAPokemon(id: string) {
-    const url = `http://localhost:3000/api/getPokemon/${id}`;
+    const url = environment.apiUrl + `/getPokemon/${id}`;
 
     return this.http.get<{message: string, pokemon: Pokemon}>(url).subscribe((resposeData) => {
       this.retrievedPokemon = resposeData.pokemon;
