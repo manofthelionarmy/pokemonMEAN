@@ -1,9 +1,11 @@
+import { environment } from './../../environments/environment.prod';
 import { Moveset } from './../models/pokemon/movset.model';
 import { map } from 'rxjs/operators';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Attacks } from './../models/pokemon/attacks.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +38,7 @@ export class AttacksService {
   constructor(private http: HttpClient) { }
 
   addAttack(a: Attacks) {
-    const url = 'http://localhost:3000/api/addAttack/';
+    const url = environment.apiUrl + '/addAttack/';
 
     console.log(a.attackName);
 
@@ -53,7 +55,7 @@ export class AttacksService {
   // something is broken with this.
   // maybe I have to fix the req body!
   addMoveset(moveset: {attacks: string[], pokemonId: string}) {
-    const url = `http://localhost:3000/api/addMoveset`;
+    const url = environment.apiUrl + '/addMoveset';
 
     this.http.post<{ message: string }>(url, moveset).subscribe();
   }
@@ -63,14 +65,14 @@ export class AttacksService {
   }
 
   updateMoveset(m: {id: string, pokemonId: string, attacks: string[]}) {
-    const url = 'http://localhost:3000/api/updateMoveset';
+    const url = environment.apiUrl + '/updateMoveset';
     const argument = m;
     this.http.put<{message: string}>(url, argument).subscribe();
 
   }
 
   checkIfMovesetExists(selectedPokemon: { id: string, kdex: number, pokemonName: string }) {
-    const url = `http://localhost:3000/api/checkMovesetExists/${selectedPokemon.id}/${selectedPokemon.kdex}/${selectedPokemon.pokemonName}`;
+    const url = environment.apiUrl + `/checkMovesetExists/${selectedPokemon.id}/${selectedPokemon.kdex}/${selectedPokemon.pokemonName}`;
 
     return this.http.get<{ message: string, moveset: Moveset, exists: boolean }>(url)
       .subscribe((response) => {
@@ -87,7 +89,7 @@ export class AttacksService {
 
 
   getAttackOptions() {
-    const url = 'http://localhost:3000/api/getAttackOptions';
+    const url = environment.apiUrl + '/getAttackOptions';
 
     return this.http.get<{ message: string, attacks: any[] }>(url)
       .pipe(map((attackData) => {
