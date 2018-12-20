@@ -34,7 +34,7 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     ice: 'powderblue',
     ghost: 'mediumpurple'
   };
-  pokemonList: {id: string, kdex: number, pokemonName: string, types: string}[] = [];
+  pokemonList: {id: string, kdex: number, pokemonName: string, types: string[]}[] = [];
 
   /**
    * The following until OnInit will be used for the organized table

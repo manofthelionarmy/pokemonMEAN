@@ -271,14 +271,14 @@ router.post("/api/addStats/:id", (req, res, next) => {
 
 router.delete("/api/deletePokemon/:id", async (req, res, next) => {
 
-  let pokemon = null;
+
   /**I found out this trick by chance. I watched a youtube video and finally I can things in synchronous calls!!! :) I can now update the logic
    * for the application!!!
    */
-  var findStatement = await Pokemon.findOne({_id: req.params.id});
+  var pokemon = await Pokemon.findOne({_id: req.params.id});
   // var deleteStatetment = await Pokemon.findOneAndDelete({_id: req.params.id});
 
-  console.log(findStatement);
+  console.log(pokemon);
 
   res.status(200).json({
     message: 'Working'
