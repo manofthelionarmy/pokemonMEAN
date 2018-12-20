@@ -53,11 +53,11 @@ p.item {
   vertical-align: top;
   margin-left: auto;
   margin-right: auto;
-  padding: 0.1em;
+  padding: 0.15em;
 }
 
 .typesContainer {
-  width: 80px;
+  width: 5em;
   display: flex;
   align-items: center;
   margin: auto;

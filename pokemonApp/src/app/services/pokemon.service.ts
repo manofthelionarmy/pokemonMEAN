@@ -98,8 +98,25 @@ export class PokemonService {
   getAPokemon(id: string) {
     const url = environment.apiUrl + `/getPokemon/${id}`;
 
-    return this.http.get<{message: string, pokemon: Pokemon}>(url).subscribe((resposeData) => {
-      this.retrievedPokemon = resposeData.pokemon;
+    return this.http.get<{message: string, pokemon: any}>(url).
+    pipe(map((data) => {
+      return {
+        id: data.pokemon._id,
+        pokemonName: data.pokemon.pokemonName,
+        kdex: data.pokemon.kdex,
+        types: data.pokemon.types,
+        evolution: data.pokemon.evolution,
+        resistances: data.pokemon.resistances,
+        weaknesses: data.pokemon.weaknesses,
+        abilities: data.pokemon.abilities,
+        moveset: data.pokemon.moveset,
+        stats: data.pokemon.stats,
+        description: data.pokemon.description,
+        height: data.pokemon.height,
+        weight: data.pokemon.weight
+      };
+    })).subscribe((resposeData) => {
+      this.retrievedPokemon = resposeData;
       this.pokemonUpdated.next(this.retrievedPokemon);
     });
   }
@@ -125,6 +142,11 @@ export class PokemonService {
 
   getPokemonUpdatedListener() {
     return this.pokemonUpdated.asObservable();
+  }
+
+  getPokemonFromEdit(id: string) {
+
+    return {...this.pokemonGetList.find((p) => p.id === id)};
   }
 
 }

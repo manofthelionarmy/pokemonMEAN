@@ -1,13 +1,15 @@
 <mat-spinner *ngIf="!finishedLoading" [diameter]="200" [strokeWidth]="10" mode="indeterminate"></mat-spinner>
 <div *ngIf="pokemon && finishedLoading">
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-4">
         <mat-card>
           <mat-card-header>
             <div mat-card-avatar [style]="updateBackground()">
             </div>
-            <mat-card-title>{{pokemon.pokemonName}}</mat-card-title>
+            <mat-card-title>
+              {{pokemon.pokemonName}}
+            </mat-card-title>
             <mat-card-subtitle>Kdex: #{{pokemon.kdex}}</mat-card-subtitle>
             <mat-card-subtitle>Type: {{pokemon.types}}</mat-card-subtitle>
           </mat-card-header>
@@ -18,11 +20,23 @@
               <p> Height: {{pokemon.height}}"</p>
               <p> Weight: {{pokemon.weight}} lbs.</p>
               <p> Description: {{pokemon.description}}</p>
+
             </div>
           </mat-card-content>
+          <mat-card-actions>
+              <hr>
+              <div>
+                <button [routerLink]="['/edit', pokemon.id]" mat-button [color]="'primary'">
+                  <mat-icon>edit</mat-icon> Edit
+                </button>
+                <button mat-button [color]="'warn'">
+                  <mat-icon>delete</mat-icon> Delete
+                </button>
+              </div>
+          </mat-card-actions>
         </mat-card>
       </div>
-      <div class="col-md-6 col-sm-8">
+      <div class="col-md-6 col-sm-8 col-xs-8">
         <div class="row">
           <div class="col-md-6 col-sm-6">
             <mat-accordion>
@@ -52,7 +66,7 @@
           </div>
         </div>
         <div class="row" style="margin-top: 2em;">
-          <div class="col-md-12 col-sm-12">
+          <div class="col-md-12 col-sm-12 col-xs-12">
             <mat-card>
               <mat-card-header>
                 <mat-card-title>Moveset</mat-card-title>

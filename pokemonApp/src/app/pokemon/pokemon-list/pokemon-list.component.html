@@ -5,12 +5,12 @@
     <div>
       <mat-card>
         <div class="row">
-          <div class="col-lg-2 col-md-2 col-sm-2 pokemon" *ngFor="let n of pokemonList">
-            <a href="http://pokemondb.net/pokedex/bulbasaur"><img [src]="getImage(n.pokemonName)" alt="Bulbasaur"></a>
+          <div class="col-lg-2 col-md-2 col-sm-3 pokemon" *ngFor="let n of pokemonList">
+            <img [src]="getImage(n.pokemonName)" alt="Bulbasaur">
             <p style="font-size: 12px; color: darkgrey;">Kdex: #{{n.kdex}}</p>
-            <p class="name" style="font-size: 18px; color: skyblue"><a [routerLink]="['/display', n.id]">{{n.pokemonName}}</a></p>
+            <p class="name" style="font-size: 1em; color: skyblue"><a [routerLink]="['/display', n.id]">{{n.pokemonName}}</a></p>
             <div class="typesContainer">
-              <p class="item" [style.font-size]="'12px'" *ngFor="let t of n.types" [style.color]="changeColor(t)" >
+              <p class="item" [style.font-size]="'0.75em'" *ngFor="let t of n.types" [style.color]="changeColor(t)" >
                 <b>{{t}}</b>
               </p>
             </div>

@@ -23,7 +23,16 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     water: 'blue',
     electric: 'gold',
     flying: 'skyblue',
-    ground: 'brown'
+    ground: 'brown',
+    poison: 'purple',
+    psychic: 'deeppink',
+    rock: '#DEB887',
+    normal: 'grey',
+    bug: '	#8FBC8F',
+    dragon: 'crimson',
+    fighting: 'firebrick',
+    ice: 'powderblue',
+    ghost: 'mediumpurple'
   };
   pokemonList: {id: string, kdex: number, pokemonName: string, types: string}[] = [];
 
@@ -39,8 +48,6 @@ export class PokemonListComponent implements OnInit, OnDestroy {
    * End of organized table
    */
 
-  linkedList: {pokemonNodeLists: {id: string, kdex: number, pokemonName: string, types: string}[]} [] = [];
-
   finishedLoading = false;
 
   ngOnInit() {
@@ -50,54 +57,9 @@ export class PokemonListComponent implements OnInit, OnDestroy {
     this.pokeListSubs = this.pokemonService.getPokemonGetListUpdatedListener().subscribe((pokeArr) => {
       console.log(pokeArr);
       this.pokemonList = pokeArr;
-
-      let row = 0;
-      for (let i = 0; i < this.pokemonList.length; i = i + 1) {
-
-
-        const pItem = {
-          id: this.pokemonList[i].id,
-          kdex: this.pokemonList[i].kdex,
-          pokemonName: this.pokemonList[i].pokemonName,
-          types: this.pokemonList[i].types
-        };
-
-        /**If we have reached the 8th pokemon, create a new row*/
-        if ( (i)  % 6 === 0 && i !== 0) {
-          const l = {
-            pokemonNodeLists: [pItem]
-          };
-          this.linkedList.push(l);
-          row = row + 1;
-        } else {
-          /**Otherwise, if the linkedList is empty initalize it. If it is not empty, keep adding
-           * <td>'s to the current HTML <tr> in the HTML <table>
-           */
-          if ( this.linkedList.length === 0 ) {
-            const l =  {
-              pokemonNodeLists: [pItem]
-            };
-            this.linkedList.push(l);
-          } else {
-            this.linkedList[row].pokemonNodeLists.push(pItem);
-            this.linkedList[row].pokemonNodeLists = [...this.linkedList[row].pokemonNodeLists];
-          }
-          this.finishedLoading = true;
-        }
-      }
-
-      this.linkedList = [...this.linkedList];
-
-      console.log(this.linkedList);
+      this.finishedLoading = true;
       // console.log(this.linkedList[1].pokemonNodeLists);
     });
-
-    /**
-     * part of the table
-     */
-    const p = document.getElementsByClassName('item');
-
-    console.log(p);
 
   }
 

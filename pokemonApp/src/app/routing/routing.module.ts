@@ -11,6 +11,7 @@ import { StatsCreateComponent } from '../pokemon/stats-create/stats-create.compo
 
 const routes: Routes = [
   {path: '', component: PokemonCreateComponent},
+  {path: 'edit/:pokemonId', component: PokemonCreateComponent},
   {path: 'list', component: PokemonListComponent},
   {path: 'moveset', component: MovesetCreateComponent},
   {path: 'attack', component: AttackCreateComponent},

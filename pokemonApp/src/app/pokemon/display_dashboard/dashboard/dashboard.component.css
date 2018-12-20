@@ -1,3 +1,7 @@
+.container {
+  width: 100%;
+}
+
 mat-spinner{
 
   margin-top: 10em;
@@ -14,6 +18,12 @@ mat-spinner{
   margin-top: 5em;
 }
 
-table {
+mat-card{
   width: 100%;
 }
+
+.mat-table {
+  vertical-align: middle;
+  width: 100%;
+}
+

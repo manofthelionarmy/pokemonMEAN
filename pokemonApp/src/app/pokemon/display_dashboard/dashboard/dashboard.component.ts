@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private id;
 
-  chart = [];
+  chart: any;
 
   data: any[] = [];
 
@@ -55,7 +55,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
       });*/
       this.finishedLoading = true;
+      this.context = document.getElementById('canvas');
 
+      // console.log(this.context);
 
     });
 
@@ -68,6 +70,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.context = document.getElementById('canvas');
+
+    // console.log(this.context);
 
   }
 

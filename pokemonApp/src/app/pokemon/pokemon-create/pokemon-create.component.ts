@@ -1,3 +1,4 @@
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { PokemonService } from './../../services/pokemon.service';
 import { Abilities } from './../../models/pokemon/abilities.model';
 import { Weaknesses } from './../../models/pokemon/weaknesses.model';
@@ -15,7 +16,8 @@ import { MatSnackBar } from '@angular/material';
 })
 export class PokemonCreateComponent implements OnInit {
 
-  constructor(private pokemonService: PokemonService, private snackbar: MatSnackBar) { }
+  constructor(private pokemonService: PokemonService, private snackbar: MatSnackBar,
+              private route: ActivatedRoute) { }
 
   types_OptionsArray: string[] = [];
 
@@ -28,6 +30,10 @@ export class PokemonCreateComponent implements OnInit {
   maxTypesCount = 2;
 
   selectedTypesCount = 0;
+
+  private mode = 'create';
+  private pokemonId: string;
+  private pokemon: {id: string, kdex: number, pokemonName: string, types: string};
 
   ngOnInit() {
     this.types_OptionsArray = [
@@ -47,6 +53,20 @@ export class PokemonCreateComponent implements OnInit {
       'Rock',
       'Electric'
     ];
+
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('pokemonId')) {
+        this.mode = 'edit';
+        this.pokemonId = paramMap.get('pokemonId');
+
+        this.pokemon = this.pokemonService.getPokemonFromEdit(this.pokemonId);
+
+        console.log(this.pokemon.id);
+      } else {
+        this.mode = 'create';
+        this.pokemonId = null;
+      }
+    });
   }
 
   onAddPokemon(form: NgForm) {

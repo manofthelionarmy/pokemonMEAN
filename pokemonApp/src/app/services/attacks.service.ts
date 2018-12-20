@@ -1,4 +1,4 @@
-import { environment } from './../../environments/environment.prod';
+import { environment } from './../../environments/environment';
 import { Moveset } from './../models/pokemon/movset.model';
 import { map } from 'rxjs/operators';
 import { Subject, BehaviorSubject } from 'rxjs';
