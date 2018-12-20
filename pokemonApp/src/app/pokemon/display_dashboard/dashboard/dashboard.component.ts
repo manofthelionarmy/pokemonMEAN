@@ -76,6 +76,10 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
+  deletePokemon(id: string) {
+    this.pokemonService.deletePokemon(id);
+  }
+
   // little hack for now. will implement sprite upload soon but this'll be a good format to have.
   updateBackground() {
     const p = this.pokemon.pokemonName.toLowerCase();

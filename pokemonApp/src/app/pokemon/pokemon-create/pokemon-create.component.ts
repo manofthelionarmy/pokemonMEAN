@@ -33,7 +33,7 @@ export class PokemonCreateComponent implements OnInit {
 
   private mode = 'create';
   private pokemonId: string;
-  private pokemon: {id: string, kdex: number, pokemonName: string, types: string};
+  private pokemon: {id: string, kdex: number, pokemonName: string, types: string[]};
 
   ngOnInit() {
     this.types_OptionsArray = [
@@ -61,7 +61,7 @@ export class PokemonCreateComponent implements OnInit {
 
         this.pokemon = this.pokemonService.getPokemonFromEdit(this.pokemonId);
 
-        console.log(this.pokemon.id);
+        console.log(this.pokemon);
       } else {
         this.mode = 'create';
         this.pokemonId = null;

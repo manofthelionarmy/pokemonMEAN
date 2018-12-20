@@ -30,8 +30,8 @@ export class PokemonService {
   private pokemonUpdatedList = new Subject<Pokemon[]>();
 
   // Used for pokemon-list to display the list of pokemon (pokedex)
-  private pokemonGetList: {id: string, kdex: number, pokemonName: string, types: string} [] = [];
-  private pokemonGetListUpdated = new Subject<{id: string, kdex: number, pokemonName: string, types: string}[]>();
+  private pokemonGetList: {id: string, kdex: number, pokemonName: string, types: string[]} [] = [];
+  private pokemonGetListUpdated = new Subject<{id: string, kdex: number, pokemonName: string, types: string[]}[]>();
 
   private selectedPokemon: {id: string, kdex: number, pokemonName: string};
   private selectedPokemonFeed = new Subject<{id: string, kdex: number, pokemonName: string}>();
@@ -74,7 +74,7 @@ export class PokemonService {
   getPokemon() {
     const url = environment.apiUrl + '/getPokemon';
 
-    return this.http.get<{messages: string, pokemon: any[]}>(url)
+    return this.http.get<{messages: string, pokemon: {id: string, kdex: number, pokemonName: string, types: string[]}[]}>(url)
                     .pipe( map( (responseData) => {
                       return responseData.pokemon.map( p => {
                         return {
@@ -98,8 +98,7 @@ export class PokemonService {
   getAPokemon(id: string) {
     const url = environment.apiUrl + `/getPokemon/${id}`;
 
-    return this.http.get<{message: string, pokemon: any}>(url).
-    pipe(map((data) => {
+    return this.http.get<{message: string, pokemon: any}>(url).pipe(map((data) => {
       return {
         id: data.pokemon._id,
         pokemonName: data.pokemon.pokemonName,
@@ -118,6 +117,12 @@ export class PokemonService {
     })).subscribe((resposeData) => {
       this.retrievedPokemon = resposeData;
       this.pokemonUpdated.next(this.retrievedPokemon);
+    });
+  }
+
+  deletePokemon(id: string) {
+    return this.http.delete<{message: string}>(environment.apiUrl + `/deletePokemon/${id}`).subscribe((response) => {
+      console.log(response.message);
     });
   }
 
@@ -145,6 +150,7 @@ export class PokemonService {
   }
 
   getPokemonFromEdit(id: string) {
+
 
     return {...this.pokemonGetList.find((p) => p.id === id)};
   }

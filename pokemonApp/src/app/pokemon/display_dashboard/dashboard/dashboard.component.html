@@ -29,7 +29,7 @@
                 <button [routerLink]="['/edit', pokemon.id]" mat-button [color]="'primary'">
                   <mat-icon>edit</mat-icon> Edit
                 </button>
-                <button mat-button [color]="'warn'">
+                <button mat-button [color]="'warn'" (click)="deletePokemon(pokemon.id)">
                   <mat-icon>delete</mat-icon> Delete
                 </button>
               </div>
