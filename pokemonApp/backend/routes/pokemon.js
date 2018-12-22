@@ -278,6 +278,34 @@ router.delete("/api/deletePokemon/:id", async (req, res, next) => {
   var pokemon = await Pokemon.findOne({_id: req.params.id});
   // var deleteStatetment = await Pokemon.findOneAndDelete({_id: req.params.id});
 
+  var evolutionId = pokemon.evolution;
+  var movesetId = pokemon.moveset;
+  var abilityId = pokemon.abilities;
+  var resistanceId = pokemon.resistances;
+  var weaknessId = pokemon.weaknesses;
+  var statsId = pokemon.stats;
+
+  await Pokemon.findByIdAndDelete({ _id: req.params.id });
+
+  if(evolutionId !== undefined) {
+    await Evolutions.findByIdAndDelete({_id: evolutionId});
+  }
+  if(movesetId !== undefined) {
+    await Moveset.findByIdAndDelete({_id: movesetId});
+  }
+  if(abilityId !== undefined) {
+    await Abilities.findByIdAndDelete({_id: abilityId});
+  }
+  if(resistanceId !== undefined) {
+    await Resistances.findByIdAndDelete({_id: resistanceId});
+  }
+  if(weaknessId !== undefined) {
+    await Weaknesses.findByIdAndDelete({_id: weaknessId});
+  }
+  if(statsId !== undefined) {
+    await Stats.findByIdAndDelete({id: statsId});
+  }
+
   console.log(pokemon);
 
   res.status(200).json({

@@ -69,11 +69,6 @@ export class PokemonListComponent implements OnInit, OnDestroy {
 
   changeColor(types: string): string {
 
-    /*if ( types[0].toLowerCase() === 'grass') {
-      console.log('here');
-      return `#0b7c38`;
-    }*/
-    console.log(types);
     return this.Colors[types.toLowerCase()];
   }
 

@@ -121,8 +121,14 @@ export class PokemonService {
   }
 
   deletePokemon(id: string) {
-    return this.http.delete<{message: string}>(environment.apiUrl + `/deletePokemon/${id}`).subscribe((response) => {
-      console.log(response.message);
+    this.http.delete<{message: string}>(environment.apiUrl + `/deletePokemon/${id}`).subscribe((response) => {
+      const index = this.pokemonGetList.findIndex((p) => p.id === id);
+      if (index !== -1) {
+        console.log('Removing from front end');
+        this.pokemonGetList.splice(index, 1);
+        this.pokemonGetList = [...this.pokemonGetList];
+        this.pokemonGetListUpdated.next([...this.pokemonGetList]);
+      }
     });
   }
 

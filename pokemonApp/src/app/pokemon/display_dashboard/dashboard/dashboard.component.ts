@@ -2,7 +2,7 @@ import { Pokemon } from './../../../models/pokemon/pokemon.model';
 import { PokemonService } from './../../../services/pokemon.service';
 import { map} from 'rxjs/operators';
 import { Component, OnInit, OnDestroy, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {interval} from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -34,7 +34,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   context: any;
 
-  constructor(private route: ActivatedRoute, private pokemonService: PokemonService, private sanitizer: DomSanitizer) { }
+  constructor(private route: ActivatedRoute, private pokemonService: PokemonService,
+              private sanitizer: DomSanitizer, private router: Router) { }
 
   ngOnInit() {
 
@@ -78,6 +79,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   deletePokemon(id: string) {
     this.pokemonService.deletePokemon(id);
+    /*this.router.navigate(['/list']).then((value) => {
+      console.log(value);
+    });*/
   }
 
   // little hack for now. will implement sprite upload soon but this'll be a good format to have.
