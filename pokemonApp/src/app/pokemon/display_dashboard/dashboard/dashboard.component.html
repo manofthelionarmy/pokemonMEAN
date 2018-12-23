@@ -15,7 +15,7 @@
           </mat-card-header>
           <mat-card-content>
             <div class="basic-pokemon-info">
-              <p> Evolution: <a href="">{{pokemon.evolution.pokemonName}}</a></p>
+              <p> Evolution: <a href="" *ngIf="pokemon.evolution != undefined">{{pokemon.evolution.pokemonName}}</a></p>
               <p> Ability: {{pokemon.abilities.abilityName}}</p>
               <p> Height: {{pokemon.height}}"</p>
               <p> Weight: {{pokemon.weight}} lbs.</p>
